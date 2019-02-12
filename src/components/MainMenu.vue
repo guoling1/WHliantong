@@ -66,19 +66,19 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 50px;
-    background-color: #FFF;
+    height: 52px;
+    background-color: #ff7350;
     .btn {
       float: left;
       width: 33.33%;
-      height: 50px;
+      height: 52px;
       text-align: center;
       display: block;
       .icon {
         margin: 8px auto 0;
-        width: 24px;
-        height: 24px;
-        background-size: 24px 24px;
+        width: 22px;
+        height: 22px;
+        background-size: 22px 22px;
         &.icon-home {
           background-image: url("../assets/home.png");
         }
@@ -90,9 +90,9 @@
         }
       }
       p {
-        font-size: 10px;
-        color: #444c59;
-        margin-top: 5px;
+        font-size: 12px;
+        color: #fff;
+        margin-top: 3px;
       }
       &.active {
         .icon-home {
@@ -105,7 +105,7 @@
           background-image: url("../assets/my1.png");
         }
         p {
-          color: #fe8d23;
+          color: #ffcf6a;
         }
       }
     }

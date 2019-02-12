@@ -3,52 +3,68 @@
     <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!isMask" :loop="!isMask" dots-position="center" :show-desc-mask="isMask"></swiper>
     <div class="productMessage">
       <p class="name">{{productData.name}}</p>
-      <p class="price">现价<span>￥{{productData.price}}</span></p>
-      <p class="oldPrice">市场价：￥{{productData.sourcePrice}}</p>
+      <p class="price">现&nbsp;&nbsp;&nbsp;&nbsp;价 ：<span>￥{{productData.price}}</span></p>
+      <p class="price">库&nbsp;&nbsp;&nbsp;&nbsp;存 ：<span>￥{{productData.price}}</span></p>
     </div>
-    <div class="priceList">
-      <div>
-        <p>担保金额</p>
-        <p class="num">￥{{productData.deposit}}</p>
+    <div class="selectBox">
+      <div class="item">
+        <p class="left">颜&nbsp;&nbsp;&nbsp;&nbsp;色 ：</p>
+        <ul class="right">
+          <li>白的</li>
+          <li>黑色</li>
+        </ul>
       </div>
-      <div>
-        <p>月消费金额</p>
-        <p class="num">￥{{productData.consumePrice}}</p>
+      <div class="item">
+        <p class="left">内&nbsp;&nbsp;&nbsp;&nbsp;存 ：</p>
+        <ul class="right">
+          <li>白的</li>
+          <li>黑色</li>
+        </ul>
       </div>
-      <div>
-        <p>合约期</p>
-        <p class="num">{{productData.circle}}月</p>
+      <div class="item">
+        <p class="left">合约套餐 ：</p>
+        <ul class="right">
+          <li class="active">白的</li>
+          <li>黑色</li>
+        </ul>
+      </div>
+      <div class="item itemPhone">
+        <p class="left">手机号码 ：</p>
+        <ul class="right">
+          <li>选新号码</li>
+          <li>老用户办理</li>
+        </ul>
       </div>
     </div>
-    <div class="address">
+    <!--<div class="address">
       <span class="attr">归属地区</span>
       <span class="val">郑州</span>
-      <!--<span class="val" @click="openAddress()">{{address.name}}</span>-->
+      &lt;!&ndash;<span class="val" @click="openAddress()">{{address.name}}</span>&ndash;&gt;
     </div>
     <div class="address">
       <span class="attr">手机号</span>
-      <!--<div class="val">-->
-        <!--<span @click="oldUserFn('01')">新用户</span>-->
-        <!--<span @click="oldUserFn('02')">老用户</span>-->
-      <!--</div>-->
+      &lt;!&ndash;<div class="val">&ndash;&gt;
+        &lt;!&ndash;<span @click="oldUserFn('01')">新用户</span>&ndash;&gt;
+        &lt;!&ndash;<span @click="oldUserFn('02')">老用户</span>&ndash;&gt;
+      &lt;!&ndash;</div>&ndash;&gt;
 
       <span class="val" @click="showhs=true">{{phone}}</span>
-      <!--<span class="val" @click="toSelectPhone()">{{phone}}</span>-->
+      &lt;!&ndash;<span class="val" @click="toSelectPhone()">{{phone}}</span>&ndash;&gt;
     </div>
     <div class="select">
       <span class="attr">颜色</span>
       <span class="val" @click="openFormat()">{{color}}</span>
-      <!--<div @click="openFormat()">
+      &lt;!&ndash;<div @click="openFormat()">
         &lt;!&ndash;<span class="selectColor">{{productData.packageList[0].name}}</span>&ndash;&gt;
         <span class="color" >{{color}}</span>
         <img src="../assets/more.png" alt="">
-      </div>-->
+      </div>&ndash;&gt;
     </div>
     <div class="bank">
-      <!--<div class="top">-->
-      <!--<span class="attr">存款银行</span>-->
-      <!--<span class="val" @click="selectBank()">请选择</span>-->
-      <!--</div>-->
+      &lt;!&ndash;<div class="top">&ndash;&gt;
+      &lt;!&ndash;<span class="attr">存款银行</span>&ndash;&gt;
+      &lt;!&ndash;<span class="val" @click="selectBank()">请选择</span>&ndash;&gt;
+      &lt;!&ndash;</div>&ndash;&gt;
       <div class="bottom">
         <span>总销量：{{productData.sellAmount}}件</span>
         <span>库存：{{stock}}件</span>
@@ -68,7 +84,7 @@
       <div class="button" @click="confirm()">确认</div>
     </div>
     <actionsheet v-model="showhs" :menus="menus" @on-click-menu="click5"></actionsheet>
-    <!--选择地区-->
+    &lt;!&ndash;选择地区&ndash;&gt;
     <div>
       <popup v-model="showAddress" position="right" style="overflow: auto">
         <div style="width:150px;">
@@ -76,7 +92,7 @@
         </div>
       </popup>
     </div>
-    <!--银行弹框-->
+    &lt;!&ndash;银行弹框&ndash;&gt;
     <div class="showBank">
       <x-dialog v-model="showBank" class="dialog-demo">
         <div class="top">
@@ -91,7 +107,7 @@
         </ul>
       </x-dialog>
     </div>
-    <!--友情提示-->
+    &lt;!&ndash;友情提示&ndash;&gt;
     <div class="showBank showTips">
       <x-dialog v-model="showTips" class="dialog-demo">
         <div class="top">
@@ -109,8 +125,8 @@
         </div>
       </x-dialog>
     </div>
-    <!--登录框-->
-    <!--<div  class="showBank showTips">
+    &lt;!&ndash;登录框&ndash;&gt;
+    &lt;!&ndash;<div  class="showBank showTips">
       <x-dialog v-model="showLogin" class="dialog-demo">
         <div class="top">
           <span>登录</span>
@@ -129,8 +145,8 @@
         <router-link to="/regist" style="font-size: 14px;float: right;margin-right: 15px;color: #666;">注册</router-link>
           <div class="buy" @click="toBuy()">立即购买</div>
       </x-dialog>
-    </div>-->
-    <!--注册框-->
+    </div>&ndash;&gt;
+    &lt;!&ndash;注册框&ndash;&gt;
     <div class="showBank  regist">
       <x-dialog v-model="showLogin" class="dialog-demo">
         <div class="top">
@@ -155,7 +171,7 @@
         <div class="buy" @click="toBuy()">立即购买</div>
       </x-dialog>
     </div>
-    <!--选择规格-->
+    &lt;!&ndash;选择规格&ndash;&gt;
     <div class="showFormat">
       <popup :hide-on-blur="hideBlur" v-model="showFormat" style="overflow: auto">
         <div class="top">
@@ -174,7 +190,7 @@
         </ul>
         <div class="button" @click="confirmFormat()">确认</div>
       </popup>
-    </div>
+    </div>-->
 
     <toast v-model="warnText" type="warn" :text=errMsg></toast>
     <toast v-model="showPrompt" position="middle" type="text" :text="promptMsg"></toast>
@@ -730,27 +746,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less" type="text/less">
-  .priceList {
-    margin-bottom: 5px;
-    div {
-      display: inline-block;
-      width: 30%;
-      border-right: 1px solid #fe8d23;
-      font-size: 12px;
-      color: #666;
-      .num {
-        margin-top: 9px;
-        font-size: 13px;
-        color: #333;
-        font-weight: bold;
-      }
-    }
-    div:nth-child(3) {
-      border-right: none;
-    }
-
-  }
-
   .regist {
     /*margin: 50px 0;*/
     width: 100%;
@@ -810,28 +805,65 @@
   }
 
   .main {
+    background: #f4f4f4;
     margin: 50px 0 0;
     width: 100%;
     padding-bottom: 50px;
+    text-align: left;
     .productMessage {
-      margin-bottom: 20px;
+      padding: 0 10px 10px;
+      border-bottom: 1px solid #ff7653;
       .name {
         margin: 13px 0;
         font-weight: bold;
+        font-size: 19px;
       }
       .price {
-        font-size: 13px;
+        margin-top: 10px;
+        font-size: 17px;
         font-weight: bold;
         span {
-          font-size: 19px;
-          font-weight: bold;
-          color: #fe8d23;
+          font-size: 25px;
+          font-weight: normal;
+          color: #ff7653;
         }
       }
       .oldPrice {
         margin: 11px 0;
         font-size: 13px;
         text-decoration: line-through;
+      }
+    }
+    .selectBox{
+      padding: 10px;
+      .item{
+        margin-top: 10px;
+        .left{
+          float: left;
+          font-size: 17px;
+          font-weight: bold;
+        }
+        .right{
+          li{
+            display: inline-block;
+            padding: 2px 5px;
+            font-size: 13px;
+            border: 1px solid #797979;
+            color: #3a3a3c;
+            border-radius: 3px;
+          }
+          li.active{
+            color: #ff7653;
+            border: 1px solid #ff7653;
+          }
+        }
+      }
+      .itemPhone{
+        .right li{
+          background: #ff7653;
+          color: #fff;
+          border-radius: 10px;
+        }
       }
     }
     .attr {

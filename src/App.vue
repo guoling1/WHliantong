@@ -6,7 +6,7 @@
       </div>
       <div class="back" @click="back()" v-if="this.$route.name!='home'">
         <img src="./assets/back.png" alt="">
-        <span>返回</span>
+        <!--<span>返回</span>-->
       </div>
       <h1>{{title}}</h1>
     </div>
@@ -30,7 +30,6 @@ export default {
     }
   },
   created(){
-    console.log(this.GLOBAL.isKDApp)
     if(sessionStorage.getItem('bk')==1&&!localStorage.getItem('userMessage')){
       this.isBank = true
     }
@@ -63,7 +62,7 @@ export default {
     height: 50px;
     z-index: 10;
     /*color: #fefefe;*/
-    background: #fff;
+    background: #ff7350;
     padding: 15px 10px 0;
   .back {
     /*width: 19px;*/
@@ -84,8 +83,9 @@ export default {
   }
   h1 {
     font-weight: bold;
-    font-size: 19px;
+    font-size: 21px;
     line-height: 24px;
+    color:#fff;
   }
   }
   #app {

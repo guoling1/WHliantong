@@ -6,8 +6,19 @@
 
     </div>-->
       <div>
-        <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!descMask" :loop="!descMask" :show-dots="showDots"
-                :show-desc-mask="descMask"></swiper>
+        <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!descMask" :loop="!descMask" :show-dots="showDots" :show-desc-mask="descMask" dots-position="center" dots-class="dotsClass"></swiper>
+        <p class="homeTitle">热门推荐</p>
+        <ul>
+          <li v-for="(item,index) in list">
+            <img :src="item.swiperList[0].url" alt="" style="width: 140px;height: 140px">
+            <div class="">{{item.name}}</div>
+            <!--<div class="subject" style="font-size: 14px;margin-top: 5px">{{item.packageName}}</div>-->
+            <div class="subject">套餐：{{item.consumePrice}}<span>X{{item.circle}}期</span></div>
+            <div class="price">存款金额：<span>￥{{item.deposit}}</span></div>
+            <div class="button" @click="toDetail(item.id)">立即办理</div>
+          </li>
+        </ul>
+        <p class="homeTitle">所有产品</p>
         <ul>
           <li v-for="(item,index) in list">
             <img :src="item.swiperList[0].url" alt="" style="width: 140px;height: 140px">
@@ -31,12 +42,13 @@
     name: 'Home',
     data() {
       return {
-        aspectRatio:1.146,
+        aspectRatio:0.63,
         list: [],
         // swiperList: [{img: require('../assets/banner.png')}],
-        swiperList: [{img: 'http://test.hdjincheng.cn/res/images/prod/8e12dd25b11543a18fec7bc5930f6d6b.png'}],
-        showDots: false,
+        swiperList: [{img: require('../assets/homeBanner.png')},{img: require('../assets/homeBanner.png')}],
+        showDots: true,
         descMask: false,
+        swipercolor:'#ff4400',
         pageNo:1,
         pageSize:10,
         more:true,
@@ -139,7 +151,7 @@
         // localStorage.removeItem('bankMsg')
         localStorage.setItem('bankMsg',JSON.stringify(dataPrams))
       }
-      this.getSwiper()
+      // this.getSwiper()
     },
     methods: {
       getSwiper(){
@@ -211,6 +223,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less" type="text/less">
+
   .main {
     /*margin: 50px 0 0;*/
     padding-bottom: 50px;
@@ -221,6 +234,11 @@
     width: 100%;
     height: 430px;
   }
+    .homeTitle{
+      text-align: left;
+      margin: 16px 15px 0;
+      font-size: 18px;
+    }
 
   ul {
     margin: 0 15px;
@@ -247,14 +265,14 @@
 
   .subject {
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     font-size: 14px;
     /*height: 42px;*/
     /*line-height: 42px;*/
     span{
       font-size: 12px;
       padding: 0 5px;
-      background: #fe8d23;
+      background: #7ba9ca;
       border-radius: 12px;
       color: #fff;
       margin-left: 5px;
@@ -265,22 +283,28 @@
 
   span {
     font-weight: bold;
-    /*color: #cb5762;*/
+    color: #e9353e;
   }
 
   }
   .button {
-    margin: 14px auto 0;
+    margin: 8px auto 0;
     width: 106px;
     height: 23px;
     line-height: 23px;
     border: 1px solid #444c59;
     border-radius: 10px;
     font-size: 12px;
-    color: #444c59;
+    color: #fff;
+    background-color: #ff8360;
   }
 
   }
   }
+  }
+</style>
+<style>
+  .dotsClass a .active{
+    background-color: #ff7653 !important;
   }
 </style>

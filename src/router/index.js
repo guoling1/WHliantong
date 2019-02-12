@@ -8,6 +8,7 @@ import Logistics from '@/components/Logistics'
 import My from '@/components/My'
 import HomeDetail from '@/components/HomeDetail'
 import ShopInfor from '@/components/ShopInfor'
+import InforEntry from '@/components/InforEntry'
 import WritePhone from '@/components/WritePhone'
 import PayMethod from '@/components/PayMethod'
 import OrderSubmit from '@/components/OrderSubmit'
@@ -32,7 +33,7 @@ export default new Router({
       		path:'/home',
       		name:'home',
           meta:{
-            title:"中国联通",
+            title:"首页",
             keepAlive:false
           },
       		component:Home
@@ -74,7 +75,7 @@ export default new Router({
       path:'/homeDetail',
       name:'homeDetail',
       meta:{
-        title:"详情",
+        title:"产品选择",
         keepAlive:true
       },
       component: HomeDetail
@@ -86,6 +87,14 @@ export default new Router({
         title:"中国联通"
       },
       component: ShopInfor
+    },
+    {
+      path:'/InforEntry',
+      name:'InforEntry',
+      meta:{
+        title:"信息录入"
+      },
+      component: InforEntry
     },
     {
       path:'/writePhone',
