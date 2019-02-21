@@ -4,6 +4,7 @@ import MainMenu from '@/components/MainMenu'
 import Home from '@/components/Home'
 import Order from '@/components/Order'
 import OrderDetail from '@/components/OrderDetail'
+import OrderInfor from '@/components/OrderInfor'
 import Logistics from '@/components/Logistics'
 import My from '@/components/My'
 import HomeDetail from '@/components/HomeDetail'
@@ -176,6 +177,13 @@ export default new Router({
         title:"提现"
       },
       component: CommissionSub
-    }
+    },{
+      path:'/orderInfor',
+      name:'orderInfor',
+      meta:{
+        title:"订单信息"
+      },
+      component:OrderInfor
+    },
   ]
 })

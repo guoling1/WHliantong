@@ -287,4 +287,14 @@ html, body {
     overflow: auto; // Remove vertical scrollbar in IE6-9
     vertical-align: top; // Readability and alignment cross-browser
   }
+  .clearfix:after{
+    display:block;
+    clear:both;
+    content:"";
+    visibility:hidden;
+    height:0;
+  }
+  .fr{
+    float: right;
+  }
 </style>

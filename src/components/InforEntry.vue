@@ -94,13 +94,13 @@
     <!--<p class="tips">温馨提示：请当月激活号卡，套餐次月生效，建议尽量使用wifi避免产生额外费用。</p>-->
     <div class="button" @click="submit()">校验信息</div>
     <toast v-model="showPrompt" position="middle" type="text" :text="promptMsg"></toast>
-    <div class="successBox">
+    <div class="successBox" v-if="isSuccess">
       <img src="../assets/bgsuccess.png" alt="">
       <img src="../assets/closeWrite.png" alt="" class="close">
       <p>校验成功</p>
       <p class="btn">确认</p>
     </div>
-    <div class="failBox">
+    <div class="failBox" v-if="isFail">
       <div class="top">
         <p class="boxTitle">友情提示</p>
         <p class="tip">1.联通黑名单用户不能办理</p>
@@ -124,6 +124,8 @@
     name: 'ShopInfo',
     data() {
       return {
+        isSuccess:false,
+        isFail:false,
         productMsg: {},
         formData: {
           productName: '',//产品名称
