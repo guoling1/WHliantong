@@ -20,6 +20,9 @@ import Regist from '@/components/Regist'
 import Commission from '@/components/Commission'
 import CommissionSub from '@/components/CommissionSub'
 import CustomOrder from '@/components/CustomOrder'
+import PayFinish from '@/components/PayFinish'
+import Agreement from '@/components/Agreement'
+import TradeFinish from '@/components/TradeFinish'
 
 Vue.use(Router)
 
@@ -184,6 +187,28 @@ export default new Router({
         title:"订单信息"
       },
       component:OrderInfor
+    },{
+      path:'/payFinish',
+      name:'payFinish',
+      meta:{
+        title:"支付完成"
+      },
+      component:PayFinish
+    },{
+      path:'/agreement',
+      name:'agreement',
+      meta:{
+        title:"协议签署"
+      },
+      component:Agreement
+    },{
+      path:'/tradeFinish',
+      name:'tradeFinish',
+      meta:{
+        title:"协议签署"
+      },
+      component:TradeFinish
     },
+
   ]
 })
