@@ -4,6 +4,7 @@ import MainMenu from '@/components/MainMenu'
 import Home from '@/components/Home'
 import Order from '@/components/Order'
 import OrderDetail from '@/components/OrderDetail'
+import OrderInfor from '@/components/OrderInfor'
 import Logistics from '@/components/Logistics'
 import My from '@/components/My'
 import HomeDetail from '@/components/HomeDetail'
@@ -19,6 +20,9 @@ import Regist from '@/components/Regist'
 import Commission from '@/components/Commission'
 import CommissionSub from '@/components/CommissionSub'
 import CustomOrder from '@/components/CustomOrder'
+import PayFinish from '@/components/PayFinish'
+import Agreement from '@/components/Agreement'
+import TradeFinish from '@/components/TradeFinish'
 
 Vue.use(Router)
 
@@ -176,6 +180,35 @@ export default new Router({
         title:"提现"
       },
       component: CommissionSub
-    }
+    },{
+      path:'/orderInfor',
+      name:'orderInfor',
+      meta:{
+        title:"订单信息"
+      },
+      component:OrderInfor
+    },{
+      path:'/payFinish',
+      name:'payFinish',
+      meta:{
+        title:"支付完成"
+      },
+      component:PayFinish
+    },{
+      path:'/agreement',
+      name:'agreement',
+      meta:{
+        title:"协议签署"
+      },
+      component:Agreement
+    },{
+      path:'/tradeFinish',
+      name:'tradeFinish',
+      meta:{
+        title:"订单完成"
+      },
+      component:TradeFinish
+    },
+
   ]
 })

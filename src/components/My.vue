@@ -1,14 +1,27 @@
 <template>
   <div class="main">
     <div class="myTop">
-      <img src="../assets/tx.png" alt="">
-      <div class="right">
-        <p class="welcome">欢迎您，</p>
-        <p class="phone">手机号：{{phone}}</p>
-      </div>
+      <!--<img src="../assets/tx.png" alt="">-->
+      <div class="avatar">头像</div>
+      <!--<div class="right">-->
+        <!--<p class="welcome">欢迎您，</p>-->
+        <!--<p class="phone">手机号：{{phone}}</p>-->
+      <!--</div>-->
     </div>
     <ul class="list">
       <li @click="toOrder()">
+        <span>我的联系方式</span>
+        <span class="fr">xxxxxxxxx</span>
+      </li>
+      <li @click="toOrder()">
+        <span>我的邮箱</span>
+        <span class="fr">xxxxxxxxx</span>
+      </li>
+      <li @click="toOrder()">
+        <span>我的地址</span>
+        <span class="fr">xxxxxxxxx</span>
+      </li>
+      <!--<li @click="toOrder()">
         <img src="../assets/orderIcon.png" alt="">
         <span>我的订单</span>
       </li>
@@ -27,7 +40,7 @@
       <li @click="signOut()" v-if="isLogin">
         <img src="../assets/退出登录.png" alt="" style="width: 20px">
         <span>退出登录</span>
-      </li>
+      </li>-->
       <!--<li @click="toChangePwd()" v-if="isLogin">
         &lt;!&ndash;<img src="../assets/orderIcon.png" alt="">&ndash;&gt;
         <span>修改密码</span>
@@ -259,21 +272,26 @@
     padding-bottom: 50px;
 
     .myTop {
-      margin: 19px 15px 30px;
-      height: 92px;
-      background: #f4f4f4;
-      border-radius: 5px;
-      text-align: left;
-      box-shadow: 0 3px 12px #f4f4f4;
+      background: url("../assets/myBg.png") no-repeat;
+      background-size: 100% auto;
+      /*margin: 19px 15px 30px;*/
+      /*height: 92px;*/
+      /*background: #f4f4f4;*/
+      /*border-radius: 5px;*/
+      text-align: center;
+      /*box-shadow: 0 3px 12px #f4f4f4;*/
 
-      img {
-        margin-top: 14px;
-        margin-left: 28px;
+      .avatar {
+        margin: 40px 0 60px;
+        /*margin-left: 28px;*/
         display: inline-block;
         width: 63px;
         height: 63px;
+        line-height: 63px;
         border: 1px solid #fff;
         border-radius: 50%;
+        background: #fb705d;
+        color: #fff;
       }
 
       .right {
@@ -291,7 +309,7 @@
       }
     }
     .list {
-      border-top: 10px solid #e7e7e7;
+      /*border-top: 10px solid #e7e7e7;*/
       padding: 10px 15px;
       text-align: left;
 
@@ -299,7 +317,7 @@
         height: 45px;
         line-height: 45px;
         border-bottom: 1px solid #e5e5e5;
-
+        color: #666;
         img {
           display: inline-block;
           margin-right: 5px;

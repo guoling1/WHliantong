@@ -3,19 +3,19 @@
     <div class="order">
       <div class="orderTitle">订单信息</div>
       <div class="content">
-        <p>订单状态：{{orderMsg.payStatus}}</p>
-        <p>订单编号：{{orderMsg.orderNo}}</p>
-        <p>创建时间：{{orderMsg.createTime | formatDate}}</p>
+        <p>订单状态：待支付</p>
+        <p>订单编号：4564651313</p>
+        <p>创建时间：2019-01-31 13:04</p>
       </div>
     </div>
     <div class="person">
       <div class="orderTitle">购买人信息</div>
       <div class="content">
         <div class="top">
-          <span class="name">{{orderMsg.name}}</span>
-          <span class="phone">{{orderMsg.mobile}}</span>
+          <span class="name">xx</span>
+          <span class="phone">15454545</span>
         </div>
-        <p class="address">{{orderMsg.address}}</p>
+        <p class="address">zzzzzzzzzzzzzzzzz</p>
       </div>
     </div>
     <div class="shop">
@@ -117,16 +117,16 @@
           //设置导航栏回调
         });
       }
-      this.$axios.post("/open/api/order/detail/get", {id: this.$route.query.id})
-        .then(res => {
-            if(!res.data.swiperList){
-              res.data.swiperList=[{url:''}]
-            }
-          this.orderMsg = res.data;
-          if(this.orderMsg.payStatus=='待支付'&&(this.$route.query.type==2)){
-            this.isPay = true
-          }
-        })
+      // this.$axios.post("/open/api/order/detail/get", {id: this.$route.query.id})
+      //   .then(res => {
+      //       // if(!res.data.swiperList){
+      //       //   res.data.swiperList=[{url:''}]
+      //       // }
+      //     this.orderMsg = res.data;
+      //     if(this.orderMsg.payStatus=='待支付'&&(this.$route.query.type==2)){
+      //       this.isPay = true
+      //     }
+      //   })
     },
     methods:{
       toLogistics(number){

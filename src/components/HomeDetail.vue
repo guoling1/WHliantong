@@ -33,8 +33,8 @@
       <div class="item itemPhone">
         <p class="left">手机号码 ：</p>
         <ul class="right">
-          <router-link><li>选新号码</li></router-link>
-          <li>老用户办理</li>
+          <li @click="infoEntry(1)">选新号码</li>
+          <li @click="infoEntry(2)">老用户办理</li>
         </ul>
       </div>
     </div>
@@ -358,6 +358,9 @@
           this.errMsg = "不能办理"
           this.warnText = true
         }
+      },
+      infoEntry(type){
+        this.$router.push('/inforEntry?type='+type)
       },
       click5(key, item) {
         let num;
@@ -827,14 +830,14 @@
       .name {
         margin: 13px 0;
         font-weight: bold;
-        font-size: 19px;
+        font-size: 17px;
       }
       .price {
         margin-top: 10px;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: bold;
         span {
-          font-size: 25px;
+          font-size: 18px;
           font-weight: normal;
           color: #ff7653;
         }

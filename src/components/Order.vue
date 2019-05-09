@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <img src="../assets/empty.png" alt="" style="width: 35%;margin-top: 20%" v-if="orderList.length==0">
+    <!--<img src="../assets/empty.png" alt="" style="width: 35%;margin-top: 20%" v-if="orderList.length==0">-->
     <ul class="list">
-      <li v-for="(item,index) in this.orderList">
+      <!--<li v-for="(item,index) in this.orderList">
         <div class="top">
           <div class="time">{{item.createTime | formatDate}}</div>
           <div class="price">￥{{item.productPrice}}</div>
@@ -22,6 +22,26 @@
         <div class="bottom">
           <div class="state">订单状态：{{item.payStatus}}</div>
           <div class="button" @click="toDetail(item.id)">查看详情</div>
+        </div>
+      </li>-->
+      <li>
+        <div class="top">
+          <div class="time">315341546541561456</div>
+          <div class="fr">2019-1-31</div>
+        </div>
+        <div class="content">
+          <div class="left">
+            <img src="../assets/phone.png" alt="">
+          </div>
+          <div class="right">
+            <p class="color">iPhone XR 白色 64G  12个月存费送机</p>
+            <p class="memory">手机号码：18519350131</p>
+            <p class="price">￥6499.00 <span>x1</span></p>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="state">订单已完成</div>
+          <div class="button" @click="toDetail(1)">查看详情</div>
         </div>
       </li>
     </ul>
@@ -170,7 +190,7 @@ export default {
         })
     },
     toDetail(id){
-      this.$router.push({path:'/orderDetail',query:{id:id,type:2}})
+      this.$router.push({path:'/orderInfor',query:{type:2}})
     }
   },
   components: {
@@ -190,10 +210,12 @@ export default {
   /*margin: 50px 0;*/
   width: 100%;
   padding-bottom: 50px;
-
+  min-height: 100%;
+  background: #f4f4f4;
   .list{
 
     li{
+      background: #fff;
       padding: 0 10px;
       border-top: 10px solid #f4f4f4;
       width: 100%;
@@ -201,7 +223,7 @@ export default {
         height: 38px;
         line-height: 38px;
         border-bottom: 1px solid #d7d7d7;
-
+        font-size: 11px;
         .time{
           float: left;
           font-size: 11px;
@@ -224,17 +246,26 @@ export default {
           /*float: left;*/
 
           img{
-            width: 114px;
-            height: 114px;
-            border: 1px solid #d7d7d7;
-            border-radius: 3px;
+            width: 70px;
+            height: 70px;
+            /*border: 1px solid #d7d7d7;*/
+            /*border-radius: 3px;*/
           }
         }
         .right{
           display:inline-block;
+          color: #868686;
           p{
             margin-bottom: 11px;
             /*margin-left: 130px;*/
+          }
+          .price{
+            /*float: right;*/
+            /*font-size: 14px;*/
+            color: #fd255a;
+            span{
+              float: right;color: #868686;
+            }
           }
         }
 
@@ -249,6 +280,7 @@ export default {
         .state{
           display: inline-block;
           text-align: left;
+          color: #fd8668;
         }
         .button{
           margin-top: 10px;
@@ -258,9 +290,11 @@ export default {
           color: #333;
           line-height: 25px;
           text-align: center;
-          border: 1px solid #333;
-          border-radius: 3px;
+          /*border: 1px solid #333;*/
+          border-radius: 25px;
           float: right;
+          background: #fd8668;
+          color: #fff;
         }
       }
     }

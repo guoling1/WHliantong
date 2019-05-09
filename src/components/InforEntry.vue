@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" style="height: 100%">
     <div class="userMessage">
       <ul>
         <li>
@@ -15,16 +15,32 @@
           <input type="text" placeholder="这里输入证件号码" v-model="formData.idcard">
         </li>
         <li>
+          <span>身份证地址</span>
+          <input type="text" placeholder="这里输入身份证地址" v-model="formData.address">
+        </li>
+        <li>
+          <span>邮箱</span>
+          <input type="text" placeholder="这里输入邮箱" v-model="formData.address">
+        </li>
+        <li>
+          <span>收货地址</span>
+          <input type="text" placeholder="这里输入收货地址" v-model="formData.address">
+        </li>
+        <!--<li>
           <span>性别</span>
           <input type="radio" value="男" name="sex" v-model="formData.sex">男
           <input type="radio" value="女" name="sex" v-model="formData.sex" style="margin-left: 25px">女
-        </li>
+        </li>-->
         <li>
           <span>手机号</span>
           <input type="text" placeholder="这里输入手机号" v-model="formData.mobile" style="background: #fff" disabled>
         </li>
-
-        <li class="cardPhoto">
+        <li class="code">
+          <span>验证码</span>
+          <input type="text" placeholder="这里输入验证码" v-model="formData.mobile" style="background: #fff">
+          <div class="sendCode">获取验证码</div>
+        </li>
+        <!--<li class="cardPhoto">
           <span>身份证正面</span>
           <img id="cardFaceImg" src="../assets/idcardface.png" alt="" @click="uploadClick('cardFace')">
           <input accept="image/*" type="file" @change="getFile($event,'cardFace','cardFaceImg','picFile')" id="cardFace" style="display: none">
@@ -38,12 +54,12 @@
           <span>手持身份证</span>
           <img id="cardHandImg" src="../assets/idcardhand.png" alt="" @click="uploadClick('cardHand')">
           <input accept="image/*" type="file" @change="getFile($event,'cardHand','cardHandImg','picFile3')" id="cardHand" style="display: none">
-        </li>
+        </li>-->
         <!--<li>
           <span>收货地址</span>
           <input type="text" placeholder="选择省市区">
         </li>-->
-        <li>
+        <!--<li>
           <span>详细地址</span>
           <input type="text" placeholder="这里输入详细地址" v-model="formData.address">
         </li>
@@ -54,12 +70,49 @@
         <li>
           <span>备注</span>
           <input type="text" placeholder="这里输入备注" v-model="remarks">
+        </li>-->
+      </ul>
+      <p v-if="type!=2" class="mainTitle">请拍摄您的身份证照片</p>
+      <ul v-if="type!=2" class="phoneUl">
+        <li class="cardPhoto">
+          <img id="cardFaceImg" src="../assets/idcardface.png" alt="" @click="uploadClick('cardFace')">
+          <input accept="image/*" type="file" @change="getFile($event,'cardFace','cardFaceImg','picFile')" id="cardFace" style="display: none">
+          <p>身份证正面</p>
+        </li>
+        <li class="cardPhoto">
+          <img id="cardBackImg" src="../assets/idcardback.png" alt="" @click="uploadClick('cardBack')">
+          <input accept="image/*" type="file" @change="getFile($event,'cardBack','cardBackImg','picFile2')" id="cardBack" style="display: none">
+          <p>身份证背面</p>
+        </li>
+        <li class="cardPhoto">
+          <img id="cardHandImg" src="../assets/idcardhand.png" alt="" @click="uploadClick('cardHand')">
+          <input accept="image/*" type="file" @change="getFile($event,'cardHand','cardHandImg','picFile3')" id="cardHand" style="display: none">
+          <p>手持身份证</p>
         </li>
       </ul>
     </div>
-    <p class="tips">温馨提示：请当月激活号卡，套餐次月生效，建议尽量使用wifi避免产生额外费用。</p>
-    <div class="button" @click="submit()">提交订单</div>
+    <!--<p class="tips">温馨提示：请当月激活号卡，套餐次月生效，建议尽量使用wifi避免产生额外费用。</p>-->
+    <div class="button" @click="submit()">校验信息</div>
     <toast v-model="showPrompt" position="middle" type="text" :text="promptMsg"></toast>
+    <div class="successBox" v-if="isSuccess">
+      <img src="../assets/bgsuccess.png" alt="">
+      <img src="../assets/closeWrite.png" alt="" class="close">
+      <p>校验成功</p>
+      <p class="btn" @click="successFn()">确认</p>
+    </div>
+    <div class="failBox" v-if="isFail">
+      <div class="top">
+        <p class="boxTitle">友情提示</p>
+        <p class="tip">1.联通黑名单用户不能办理</p>
+        <p class="tip">2.在联通已经拥有超过5个号码（含5个）不能办理</p>
+        <p class="tip">3.如不清楚账户状态可拨打10010咨询</p>
+      </div>
+      <!--<img src="../assets/bgfail.png" alt="">-->
+      <img src="../assets/closeWrite.png" alt="" class="close">
+
+      <p class="msg">校验失败</p>
+      <p class="btn">确认</p>
+    </div>
   </div>
 </template>
 
@@ -71,6 +124,9 @@
     name: 'ShopInfo',
     data() {
       return {
+        type:'',
+        isSuccess:false,
+        isFail:false,
         productMsg: {},
         formData: {
           productName: '',//产品名称
@@ -109,6 +165,7 @@
       }
     },
     created() {
+      this.type = this.$route.query.type;
       if (this.GLOBAL.isKDApp) {
         aladdin.header.config({
           //导航头部背景颜色
@@ -198,6 +255,13 @@
       }
     },
     methods: {
+      successFn(){
+        if(this.type==1){
+          this.$router.push('/selectPhone')
+        }else {
+          this.$router.push('/orderInfor')
+        }
+      },
       changePY() {
         var pyList = this.CC2PY(this.formData.customerName)
         this.formData.xingPinyin = pyList[0].substring(0, 1).toUpperCase() + pyList[0].substring(1);
@@ -216,7 +280,8 @@
         }
       },
       submit() {
-        this.formData.idcard = this.formData.idcard.toUpperCase()
+        this.isSuccess = true
+        /*this.formData.idcard = this.formData.idcard.toUpperCase()
         let params = new FormData;
         let flag = true;
         for (var i in this.formData) {
@@ -271,7 +336,7 @@
         } else {
           this.showPrompt = true;
           this.promptMsg = '请补全信息'
-        }
+        }*/
 
       },
       CC2PY(l1) {
@@ -350,6 +415,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less" type="text/less">
+
   .weui-cell {
     padding: 0;
   }
@@ -368,11 +434,13 @@
     background: #f4f4f4;
     .userMessage {
       margin-top: 20px;
-      background: #fff;
-      text-align: left;
-      border-radius: 8px;
+
       ul {
-        padding: 0 15px;
+        padding: 20px 15px;
+        background: #fff;
+        text-align: left;
+        border-radius: 8px;
+        box-shadow: 0 3px 25px #b4eaf0;
         li {
           font-size: 14px;
           height: 37px;
@@ -392,6 +460,40 @@
             margin-bottom: 10px;
           }
         }
+        li.code{
+          input{
+            width: 40%;
+          }
+          .sendCode{
+            margin-top: 3.5px;
+            float: right;
+            background: #64a1cd;
+            line-height: 30px;
+            padding: 0 5px;
+            border-radius: 15px;
+            color: #fff;
+          }
+        }
+      }
+      .mainTitle{
+        padding: 30px 0 25px;
+      }
+      .phoneUl{
+        padding-bottom: 1px;
+        background: #acc4d5;
+        text-align: center;
+        li.cardPhoto {
+          height: inherit;
+          border: none;
+          img {
+            width: 90%;
+            vertical-align: text-top;
+            margin-bottom: 10px;
+          }
+          p{
+            margin: 5px 0 30px;
+          }
+        }
       }
     }
     .tips {
@@ -403,12 +505,89 @@
       color: #ff0000;
     }
     .button {
-      margin-top: 15px;
-      height: 48px;
-      line-height: 48px;
+      margin: 15px auto;
+      height: 35px;
+      line-height: 35px;
       color: #fff;
       font-weight: bold;
-      background: #fe8d23;
+      background: #5a94bd;
+      width: 110px;
+      border-radius: 6px;
+    }
+    .successBox{
+      position: fixed;
+      bottom: 20px;
+      left: 5%;
+      width: 90%;
+      border: 1px solid #ff8d6d;
+      border-radius: 8px;
+      background: #fff;
+      p{
+        margin: 10px 0 15px;
+        font-size: 16px;
+        color: #ff8d6d;
+      }
+      p.btn{
+        margin: 10px auto 15px;
+        background: #ff8d6d;
+        color: #fff;
+        line-height: 34px;
+        border-radius: 17px;
+        width: 150px;
+      }
+
+      .close{
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 15px;
+      }
+    }
+    .failBox{
+      position: fixed;
+      bottom: 20px;
+      left: 5%;
+      width: 90%;
+      border: 1px solid #ff8d6d;
+      border-radius: 8px;
+      background: #fff;
+      .top{
+        .boxTitle{
+          font-size: 18px;
+          color: #fff;
+          padding: 25px 0 30px;
+        }
+        .tip{
+          margin: 0 10px 0;
+          padding-bottom: 14px;
+          text-align: left;
+          color: #333;
+          line-height: 25px;
+        }
+
+        background: url("../assets/bgfail.png") no-repeat;
+        background-size: 100%;
+      }
+      .msg{
+        margin: 10px 0 15px;
+        font-size: 16px;
+        color: #ff8d6d;
+      }
+      p.btn{
+        margin: 10px auto 15px;
+        background: #ff8d6d;
+        color: #fff;
+        line-height: 34px;
+        border-radius: 17px;
+        width: 150px;
+      }
+
+      .close{
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 15px;
+      }
     }
   }
 </style>
