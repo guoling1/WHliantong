@@ -1,10 +1,10 @@
 <template>
   <div class="main">
 
-    <!--<div class="banner">
-      &lt;!&ndash;<img src="../assets/banner.png" alt="" style="width: 100%;height: 100%">&ndash;&gt;
+    <!--<div class="banner">-->
+      <!--<img src="../assets/banner.png" alt="" style="width: 100%;height: 100%">-->
 
-    </div>-->
+    <!--</div>-->
       <div>
         <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!descMask" :loop="!descMask" :show-dots="showDots" :show-desc-mask="descMask" dots-position="center" dots-class="dotsClass"></swiper>
         <p class="homeTitle">热门推荐</p>
