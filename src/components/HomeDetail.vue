@@ -10,28 +10,30 @@
       <div class="item">
         <p class="left">颜&nbsp;&nbsp;&nbsp;&nbsp;色 ：</p>
         <ul class="right">
-          <li>白的</li>
-          <li>黑色</li>
+          <li :class="color=='白色'?'active':''" @click="selectColor('白色')">白的</li>
+          <li :class="color=='黑色'?'active':''" @click="selectColor('黑色')">黑色</li>
         </ul>
       </div>
       <div class="item">
         <p class="left">内&nbsp;&nbsp;&nbsp;&nbsp;存 ：</p>
         <ul class="right">
-          <li>白的</li>
-          <li>黑色</li>
+          <li :class="bb=='64G'?'active':''" @click="bbF('64G')">64G</li>
+          <li :class="bb=='128G'?'active':''" @click="bbF('128G')">128G</li>
         </ul>
       </div>
       <div class="item">
         <p class="left">合约套餐 ：</p>
         <ul class="right">
-          <li class="active">白的</li>
-          <li>黑色</li>
+          <li style="margin-bottom: 10px" :class="aa==1?'active':''" @click="aaF(1)">12个月存费送机</li>
+          <li style="margin-bottom: 10px" :class="aa==2?'active':''" @click="aaF(2)">24个月存费送机</li>
+          <li style="margin-bottom: 10px" :class="aa==3?'active':''" @click="aaF(3)">30个月存费送机</li>
+          <li style="margin-bottom: 10px" :class="aa==4?'active':''" @click="aaF(4)">36个月存费送机</li>
         </ul>
       </div>
       <div class="item itemPhone">
         <p class="left">手机号码 ：</p>
         <ul class="right">
-          <li>选新号码</li>
+          <router-link><li>选新号码</li></router-link>
           <li>老用户办理</li>
         </ul>
       </div>
@@ -236,6 +238,8 @@
         address: {name: '请选择'},
         colorList: ["深空灰", "金色", "玫瑰金"],
         color: '请选择',
+        bb:'',
+        aa:'',
         warnText: false,
         errMsg: '',
         showPrompt: false,
@@ -469,8 +473,15 @@
         this.showAddress = false;
       },
       selectColor(color) {
-        this.color = color.color;
-        this.stock = color.amount
+        this.color = color
+        // this.color = color.color;
+        // this.stock = color.amount
+      },
+      bbF(a){
+        this.bb = a
+      },
+      aaF(a){
+        this.aa = a
       },
       selectBank() {
         //选择银行前先选择区域

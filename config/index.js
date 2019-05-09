@@ -38,12 +38,12 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../wofinance/index.html'),
+    index: path.resolve(__dirname, '../WHliantong/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../wofinance'),
+    assetsRoot: path.resolve(__dirname, '../WHliantong'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/union',
 
     /**
      * Source Maps
