@@ -193,7 +193,7 @@ export default {
       this.showSubmit = true;
     },
     pay(){
-      this.$router.push('/payFinish')
+      this.$router.push('/payFinish?name='+this.$route.query.name+'&type='+this.$route.query.type)
       // if(this.GLOBAL.isKDApp){
       //   window.aladdin.navigator.forward({url:'http://test.hdjincheng.cn/#/payMethod?orderNo='+this.orderMsg.orderNo+'&id='+this.$route.query.id});
       // }else{

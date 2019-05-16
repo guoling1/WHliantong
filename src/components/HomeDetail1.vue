@@ -3,194 +3,36 @@
     <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!isMask" :loop="!isMask" dots-position="center" :show-desc-mask="isMask"></swiper>
     <div class="productMessage">
       <p class="name">{{productData.name}}</p>
-      <p class="price">现&nbsp;&nbsp;&nbsp;&nbsp;价 ：<span>￥6000.00</span></p>
-      <p class="price">库&nbsp;&nbsp;&nbsp;&nbsp;存 ：<span>有货</span></p>
+      <p class="price">存款金额 ：<span>￥{{price1}}</span></p>
+      <p class="price">购&nbsp;&nbsp;机&nbsp;&nbsp;款 ：<span>￥{{price2}}</span></p>
     </div>
     <div class="selectBox">
       <div class="item">
-        <p class="left">颜&nbsp;&nbsp;&nbsp;&nbsp;色 ：</p>
-        <ul class="right">
-          <li :class="color=='白色'?'active':''" @click="selectColor('白色')">白的</li>
-          <li :class="color=='黑色'?'active':''" @click="selectColor('黑色')">黑色</li>
+        <p class="left">合&nbsp;&nbsp;约&nbsp;&nbsp;期 ：</p>
+        <ul class="right" style="margin-left: 93px">
+          <li style="margin: 0 20px 10px 0" :class="color=='12个月'?'active':''" @click="selectColor('12个月')">12个月</li>
+          <li style="margin: 0 20px 10px 0" :class="color=='24个月'?'active':''" @click="selectColor('24个月')">24个月</li>
+          <li style="margin: 0 20px 10px 0" :class="color=='30个月'?'active':''" @click="selectColor('30个月')">30个月</li>
+          <li style="margin: 0 20px 10px 0" :class="color=='36个月'?'active':''" @click="selectColor('36个月')">36个月</li>
         </ul>
       </div>
       <div class="item">
-        <p class="left">内&nbsp;&nbsp;&nbsp;&nbsp;存 ：</p>
+        <p class="left">合约套餐 ：</p>
+        <ul class="right" style="margin-left: 93px">
+          <li style="margin: 0 16px 10px 0" :class="bb=='99元冰淇淋套餐'?'active':''" @click="bbF('99元冰淇淋套餐')">99元冰淇淋套餐</li>
+          <li style="margin: 0 16px 10px 0" :class="bb=='129元冰淇淋套餐'?'active':''" @click="bbF('129元冰淇淋套餐')">129元冰淇淋套餐</li>
+          <li style="margin: 0 16px 10px 0" :class="bb=='199元冰淇淋套餐'?'active':''" @click="bbF('199元冰淇淋套餐')">199元冰淇淋套餐</li>
+          <li style="margin: 0 16px 10px 0" :class="bb=='398元冰淇淋套餐'?'active':''" @click="bbF('398元冰淇淋套餐')">398元冰淇淋套餐</li>
+        </ul>
+      </div>
+      <div class="item itemPhone">
+        <p class="left">办理方式 ：</p>
         <ul class="right">
-          <li :class="bb=='64G'?'active':''" @click="bbF('64G')">64G</li>
-          <li :class="bb=='128G'?'active':''" @click="bbF('128G')">128G</li>
+          <li @click="infoEntry(1)">选新号码</li>
+          <li @click="infoEntry(2)">老用户办理</li>
         </ul>
       </div>
-      <div class="item">
-        <p class="left">活动类型 ：</p>
-        <ul class="right" style="margin-left: 90px">
-          <li style="margin-bottom: 10px;margin-right: 50px" :class="aa==1?'active':''" @click="aaF(1)">存款止付合约购机</li>
-          <li style="margin-bottom: 10px;margin-right: 50px" :class="aa==2?'active':''" @click="aaF(2)">信用卡分期合约购机</li>
-        </ul>
-      </div>
-      <!--<div class="item itemPhone">-->
-        <!--<p class="left">手机号码 ：</p>-->
-        <!--<ul class="right">-->
-          <!--<li @click="infoEntry(1)">选新号码</li>-->
-          <!--<li @click="infoEntry(2)">老用户办理</li>-->
-        <!--</ul>-->
-      <!--</div>-->
     </div>
-    <!--<div class="address">
-      <span class="attr">归属地区</span>
-      <span class="val">郑州</span>
-      &lt;!&ndash;<span class="val" @click="openAddress()">{{address.name}}</span>&ndash;&gt;
-    </div>
-    <div class="address">
-      <span class="attr">手机号</span>
-      &lt;!&ndash;<div class="val">&ndash;&gt;
-        &lt;!&ndash;<span @click="oldUserFn('01')">新用户</span>&ndash;&gt;
-        &lt;!&ndash;<span @click="oldUserFn('02')">老用户</span>&ndash;&gt;
-      &lt;!&ndash;</div>&ndash;&gt;
-
-      <span class="val" @click="showhs=true">{{phone}}</span>
-      &lt;!&ndash;<span class="val" @click="toSelectPhone()">{{phone}}</span>&ndash;&gt;
-    </div>
-    <div class="select">
-      <span class="attr">颜色</span>
-      <span class="val" @click="openFormat()">{{color}}</span>
-      &lt;!&ndash;<div @click="openFormat()">
-        &lt;!&ndash;<span class="selectColor">{{productData.packageList[0].name}}</span>&ndash;&gt;
-        <span class="color" >{{color}}</span>
-        <img src="../assets/more.png" alt="">
-      </div>&ndash;&gt;
-    </div>
-    <div class="bank">
-      &lt;!&ndash;<div class="top">&ndash;&gt;
-      &lt;!&ndash;<span class="attr">存款银行</span>&ndash;&gt;
-      &lt;!&ndash;<span class="val" @click="selectBank()">请选择</span>&ndash;&gt;
-      &lt;!&ndash;</div>&ndash;&gt;
-      <div class="bottom">
-        <span>总销量：{{productData.sellAmount}}件</span>
-        <span>库存：{{stock}}件</span>
-      </div>
-    </div>
-    <div class="detail">
-      <div class="subject">
-        <i></i>
-        <span>图文详情</span>
-        <i></i>
-      </div>
-      <div class="detail" id="content" v-html="productData.content" style="font-size: 0"></div>
-      <div class="detail" id="content1" v-html="productData.configDetail" style="font-size: 0"></div>
-    </div>
-    <div class="end">
-      <input type="number" placeholder="推荐人手机号(选填)" v-model="rcdMobile">
-      <div class="button" @click="confirm()">确认</div>
-    </div>
-    <actionsheet v-model="showhs" :menus="menus" @on-click-menu="click5"></actionsheet>
-    &lt;!&ndash;选择地区&ndash;&gt;
-    <div>
-      <popup v-model="showAddress" position="right" style="overflow: auto">
-        <div style="width:150px;">
-          <p v-for="address in addressList" @click="selectAddress(address)" class="addressList">{{address.name}}</p>
-        </div>
-      </popup>
-    </div>
-    &lt;!&ndash;银行弹框&ndash;&gt;
-    <div class="showBank">
-      <x-dialog v-model="showBank" class="dialog-demo">
-        <div class="top">
-          <span>选择银行</span>
-          <span @click="showBank=false" class="close"></span>
-        </div>
-        <ul class="bankUl">
-          <li class="active">平安银行</li>
-          <li>平安银行</li>
-          <li>平安银行</li>
-          <li>平安银行</li>
-        </ul>
-      </x-dialog>
-    </div>
-    &lt;!&ndash;友情提示&ndash;&gt;
-    <div class="showBank showTips">
-      <x-dialog v-model="showTips" class="dialog-demo">
-        <div class="top">
-          <span>友情提示</span>
-          <span @click="showTips=false" class="close"></span>
-        </div>
-        <div class="content">
-          <p>1.联通黑名单用户不能办理</p>
-          <p>2.在联通已经拥有超过5个号码（含5个）不能办理</p>
-          <p>3.如不清楚账户状态可拨打10010咨询</p>
-        </div>
-        <div class="bottom">
-          <div @click="showTips = false">取消</div>
-          <div @click="confirmTips()">确认</div>
-        </div>
-      </x-dialog>
-    </div>
-    &lt;!&ndash;登录框&ndash;&gt;
-    &lt;!&ndash;<div  class="showBank showTips">
-      <x-dialog v-model="showLogin" class="dialog-demo">
-        <div class="top">
-          <span>登录</span>
-          <span @click="showLogin=false" class="close"></span>
-        </div>
-        <div class="content" style="padding-top: 4px">
-          <ul>
-            <li>
-              <input v-model="formData.phone" type="number" placeholder="手机号">
-            </li>
-            <li>
-              <input v-model="formData.password" type="password" placeholder="密码(首次登录密码为注册短信验证码)">
-            </li>
-          </ul>
-        </div>
-        <router-link to="/regist" style="font-size: 14px;float: right;margin-right: 15px;color: #666;">注册</router-link>
-          <div class="buy" @click="toBuy()">立即购买</div>
-      </x-dialog>
-    </div>&ndash;&gt;
-    &lt;!&ndash;注册框&ndash;&gt;
-    <div class="showBank  regist">
-      <x-dialog v-model="showLogin" class="dialog-demo">
-        <div class="top">
-          <span>登录</span>
-          <span @click="showLogin=false" class="close"></span>
-        </div>
-        <div class="content" style="padding-top: 4px">
-          <ul>
-            <li>
-              <input v-model="formData.phone" type="number" placeholder="输入手机号">
-            </li>
-            <li>
-              <input v-model="formData.validataCode" type="text" placeholder="输入验证码">
-              <img :src="imgMsg.img" @click="imgClick()" alt="">
-            </li>
-            <li>
-              <input v-model="formData.messageCode" type="text" placeholder="输入短信验证码">
-              <span @click="getCode()">{{count}}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="buy" @click="toBuy()">立即购买</div>
-      </x-dialog>
-    </div>
-    &lt;!&ndash;选择规格&ndash;&gt;
-    <div class="showFormat">
-      <popup :hide-on-blur="hideBlur" v-model="showFormat" style="overflow: auto">
-        <div class="top">
-          <img :src="swiperList[0].img" alt="" style="margin-top: 10px">
-          <div class="right">
-            <p class="price">￥{{productData.price}}</p>
-            <p>库存：{{stock}}件</p>
-          </div>
-        </div>
-        <ul>
-          <li>
-            <div class="subject">机身颜色</div>
-            <span :class="color==item.color?'active':''" v-for="item in productData.colorList"
-                  @click="selectColor(item)">{{item.color}}</span>
-          </li>
-        </ul>
-        <div class="button" @click="confirmFormat()">确认</div>
-      </popup>
-    </div>-->
 
     <toast v-model="warnText" type="warn" :text=errMsg></toast>
     <toast v-model="showPrompt" position="middle" type="text" :text="promptMsg"></toast>
@@ -206,6 +48,10 @@
     data() {
       return {
         showhs:false,
+        color:'12个月',
+        price1:2000,
+        price2:4000,
+        bb:'99元冰淇淋套餐',
         menus:{
           menu1: '新用户',
           // menu2: '老用户'
@@ -235,8 +81,7 @@
         addressList: [],
         address: {name: '请选择'},
         colorList: ["深空灰", "金色", "玫瑰金"],
-        color: '请选择',
-        bb:'',
+
         aa:'',
         warnText: false,
         errMsg: '',
@@ -352,10 +197,6 @@
         // } else {
         //   this.phone = '请选择'
         // }
-        if(this.$route.query.checkCode!="0000"){
-          this.errMsg = "不能办理"
-          this.warnText = true
-        }
       },
       infoEntry(type){
         this.$router.push('/inforEntry?type='+type)
@@ -479,14 +320,23 @@
         // this.stock = color.amount
       },
       bbF(a){
-        this.bb = a
+        this.bb = a;
+        if(a=='99元冰淇淋套餐'){
+          this.price1='2000'
+          this.price2='4000'
+        }else if(a=='129元冰淇淋套餐'){
+          this.price1='3000'
+          this.price2='5000'
+        }else if(a=='199元冰淇淋套餐'){
+          this.price1='5000'
+          this.price2='1000'
+        } else if(a=='398元冰淇淋套餐'){
+          this.price1='6000'
+          this.price2='0'
+        }
       },
       aaF(a){
-        if(a==1){
-          this.$router.push('/homeDetail1?id=149');
-        }else {
-          this.$router.push('/homeDetail2?id=149')
-        }
+        this.aa = a
       },
       selectBank() {
         //选择银行前先选择区域

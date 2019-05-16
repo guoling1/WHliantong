@@ -8,6 +8,8 @@ import OrderInfor from '@/components/OrderInfor'
 import Logistics from '@/components/Logistics'
 import My from '@/components/My'
 import HomeDetail from '@/components/HomeDetail'
+import HomeDetail1 from '@/components/HomeDetail1'
+import HomeDetail2 from '@/components/HomeDetail2'
 import ShopInfor from '@/components/ShopInfor'
 import InforEntry from '@/components/InforEntry'
 import WritePhone from '@/components/WritePhone'
@@ -83,6 +85,24 @@ export default new Router({
         keepAlive:true
       },
       component: HomeDetail
+    },
+    {
+      path:'/homeDetail1',
+      name:'homeDetail1',
+      meta:{
+        title:"存款止付合约购机",
+        keepAlive:true
+      },
+      component: HomeDetail1
+    },
+    {
+      path:'/homeDetail2',
+      name:'homeDetail2',
+      meta:{
+        title:"信用卡分期合约购机",
+        keepAlive:true
+      },
+      component: HomeDetail2
     },
     {
       path:'/shopInfor',

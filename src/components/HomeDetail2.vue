@@ -3,38 +3,34 @@
     <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!isMask" :loop="!isMask" dots-position="center" :show-desc-mask="isMask"></swiper>
     <div class="productMessage">
       <p class="name">{{productData.name}}</p>
-      <p class="price">现&nbsp;&nbsp;&nbsp;&nbsp;价 ：<span>￥6000.00</span></p>
-      <p class="price">库&nbsp;&nbsp;&nbsp;&nbsp;存 ：<span>有货</span></p>
+      <p class="price">合约价格 ：<span>￥6000.00</span></p>
     </div>
     <div class="selectBox">
       <div class="item">
-        <p class="left">颜&nbsp;&nbsp;&nbsp;&nbsp;色 ：</p>
-        <ul class="right">
-          <li :class="color=='白色'?'active':''" @click="selectColor('白色')">白的</li>
-          <li :class="color=='黑色'?'active':''" @click="selectColor('黑色')">黑色</li>
+        <p class="left">合&nbsp;&nbsp;约&nbsp;&nbsp;期 ：</p>
+        <ul class="right" style="margin-left: 93px">
+          <li style="margin: 0 20px 10px 0" :class="color=='12个月'?'active':''" @click="selectColor('12个月')">12个月</li>
+          <li style="margin: 0 20px 10px 0" :class="color=='24个月'?'active':''" @click="selectColor('24个月')">24个月</li>
+          <li style="margin: 0 20px 10px 0" :class="color=='30个月'?'active':''" @click="selectColor('30个月')">30个月</li>
+          <li style="margin: 0 20px 10px 0" :class="color=='36个月'?'active':''" @click="selectColor('36个月')">36个月</li>
         </ul>
       </div>
       <div class="item">
-        <p class="left">内&nbsp;&nbsp;&nbsp;&nbsp;存 ：</p>
+        <p class="left">合约套餐 ：</p>
+        <ul class="right" style="margin-left: 93px">
+          <li style="margin: 0 16px 10px 0" :class="bb=='99元冰淇淋套餐'?'active':''" @click="bbF('99元冰淇淋套餐')">99元冰淇淋套餐</li>
+          <li style="margin: 0 16px 10px 0" :class="bb=='129元冰淇淋套餐'?'active':''" @click="bbF('129元冰淇淋套餐')">129元冰淇淋套餐</li>
+          <li style="margin: 0 16px 10px 0" :class="bb=='199元冰淇淋套餐'?'active':''" @click="bbF('199元冰淇淋套餐')">199元冰淇淋套餐</li>
+          <li style="margin: 0 16px 10px 0" :class="bb=='398元冰淇淋套餐'?'active':''" @click="bbF('398元冰淇淋套餐')">398元冰淇淋套餐</li>
+        </ul>
+      </div>
+      <div class="item itemPhone">
+        <p class="left">办理方式 ：</p>
         <ul class="right">
-          <li :class="bb=='64G'?'active':''" @click="bbF('64G')">64G</li>
-          <li :class="bb=='128G'?'active':''" @click="bbF('128G')">128G</li>
+          <li @click="infoEntry(1)">选新号码</li>
+          <li @click="infoEntry(2)">老用户办理</li>
         </ul>
       </div>
-      <div class="item">
-        <p class="left">活动类型 ：</p>
-        <ul class="right" style="margin-left: 90px">
-          <li style="margin-bottom: 10px;margin-right: 50px" :class="aa==1?'active':''" @click="aaF(1)">存款止付合约购机</li>
-          <li style="margin-bottom: 10px;margin-right: 50px" :class="aa==2?'active':''" @click="aaF(2)">信用卡分期合约购机</li>
-        </ul>
-      </div>
-      <!--<div class="item itemPhone">-->
-        <!--<p class="left">手机号码 ：</p>-->
-        <!--<ul class="right">-->
-          <!--<li @click="infoEntry(1)">选新号码</li>-->
-          <!--<li @click="infoEntry(2)">老用户办理</li>-->
-        <!--</ul>-->
-      <!--</div>-->
     </div>
     <!--<div class="address">
       <span class="attr">归属地区</span>
@@ -347,15 +343,6 @@
               this.rcdMobile = res.data.rcdMobile;
             })
         }
-        // if (localStorage.getItem('selectPhone')) {
-        //   this.phone = localStorage.getItem('selectPhone')
-        // } else {
-        //   this.phone = '请选择'
-        // }
-        if(this.$route.query.checkCode!="0000"){
-          this.errMsg = "不能办理"
-          this.warnText = true
-        }
       },
       infoEntry(type){
         this.$router.push('/inforEntry?type='+type)
@@ -482,11 +469,7 @@
         this.bb = a
       },
       aaF(a){
-        if(a==1){
-          this.$router.push('/homeDetail1?id=149');
-        }else {
-          this.$router.push('/homeDetail2?id=149')
-        }
+        this.aa = a
       },
       selectBank() {
         //选择银行前先选择区域

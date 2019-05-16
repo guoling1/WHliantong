@@ -101,7 +101,7 @@ export default {
         })
     },
     submit(){
-      this.$router.push('/orderInfor')
+      this.$router.push('/orderInfor?name='+this.$route.query.name+'&type='+this.$route.query.type)
       // localStorage.setItem("selectPhone",this.selectNum)
       // this.$store.commit("PHONE",this.selectNum)
       // if(this.GLOBAL.isKDApp){

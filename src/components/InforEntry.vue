@@ -16,11 +16,11 @@
         </li>
         <li>
           <span>身份证地址</span>
-          <input type="text" placeholder="这里输入身份证地址" v-model="formData.address">
+          <input type="text" placeholder="这里输入身份证地址" v-model="formData.idcardAddress">
         </li>
         <li>
           <span>邮箱</span>
-          <input type="text" placeholder="这里输入邮箱" v-model="formData.address">
+          <input type="text" placeholder="这里输入邮箱" v-model="formData.email">
         </li>
         <li>
           <span>收货地址</span>
@@ -37,8 +37,8 @@
         </li>
         <li class="code">
           <span>验证码</span>
-          <input type="text" placeholder="这里输入验证码" v-model="formData.mobile" style="background: #fff">
-          <div class="sendCode">获取验证码</div>
+          <input type="text" placeholder="这里输入验证码" v-model="formData.code" style="background: #fff">
+          <div class="sendCode" @click="sendCode()">获取验证码</div>
         </li>
         <!--<li class="cardPhoto">
           <span>身份证正面</span>
@@ -138,22 +138,24 @@
           bank: '',//银行
           endDay: '',//截止日期
           region: '',//所属区域
-          customerName: '',//客户名称
+          customerName: '张三',//客户名称
           xingPinyin: '',//姓拼音
           mingPinyin: '',//名拼音
           country: '',//国家
           agreetmentNo: '',//合同号
-          mobile: '',//客户手机号
+          mobile: '13075425555',//客户手机号
           price: '',//价格
           busiType: '',//业务类型
           idcardType: '',//证件类型
-          idcard: '',//身份证号
-          address: '', //详细地址
+          idcard: '130406199909150621',//身份证号
+          address: '湖北省武汉市青山区建设五路3号', //详细地址
+          idcardAddress:'武汉市青山区',
+          email:'15245655@mail.com',
           productMemory: '',//内存
           productColor: '',//颜色
           setMeal: "",//所选号码
           sex: '男',
-          email: ''
+          code:'1234'
         },
         sex: '男',
         remarks: '',//备注
@@ -166,100 +168,16 @@
     },
     created() {
       this.type = this.$route.query.type;
-      if (this.GLOBAL.isKDApp) {
-        aladdin.header.config({
-          //导航头部背景颜色
-          backgroundColor: '#ffffff',
-          //是否显示导航头部底部线条
-          underlineVisible: false,
-          //是否显示左区域按钮
-          leftVisible: true,
-          //是否显示右区域按钮
-          rightVisible: true,
-          //导航头部中间区域，
-          middle: [{
-            //类型（text、image、search等）
-            type: 'text',
-            //标题 页面title，自定义
-            title: '中国联通',
-            //文字颜色
-            textColor: '#f37937',
-            //文字大小
-            fontSize: 18,
-            //背景颜色
-            backgroundColor: '#ffffff',
-            //回调事件
-            click: function () {
-              //do something
-            }
-          }],
-          //左区域
-          left: [{
-            //图标
-            //icon: '/navBar/images/navBar/scan@2x.png',
-            //图标颜色
-            //tintColor: '#999999',
-            //背景颜色
-            //backgroundColor: '#ffffff',
-            //是否显示小红点
-            //badge: false,
-            //回调事件
-            click: function () {
-              window.aladdin.navigator.back();
-            }
-          }],
-          //右区域
-          right: [{
-            //图标
-            //icon: '/navBar/images/navBar/customer@2x.png',
-            //回调事件
-            //click: function () {
-            //do something
-            //}
-          }]
-        }, function (err, param) {
-          //设置导航栏回调
-        });
-      }
-      this.productMsg = this.$route.query;
-      this.formData = {
-        productName: this.$route.query.productName,//产品名称
-        productPrice: this.$route.query.price,//产品价格
-        productMobile: this.$route.query.phone,//产品手机号
-        number: this.$route.query.phone,
-        circle: this.$route.query.circle,//套餐周期
-        deposit: this.$route.query.deposit,//托管金额
-        areaId: this.$route.query.addressId,//区域id
-        bank: '平安',//银行
-        endDay: '2019-01-01',//截止日期
-        region: this.$route.query.addressName,//所属区域
-        customerName: '',//客户名称
-        xingPinyin: '',//姓拼音
-        mingPinyin: '',//名拼音
-        country: '中国',//国家
-        agreetmentNo: '111111',//合同号
-        mobile: JSON.parse(localStorage.getItem("userMessage")).mobile,//客户手机号
-        price: this.$route.query.setMealPrice,//价格
-        busiType: this.$route.query.busiType,//业务类型
-        idcardType: '身份证',//证件类型
-        idcard: '',//身份证号
-        address: '',
-        productColor: this.$route.query.color,
-        productMemory: this.$route.query.memory,
-        packageName: this.$route.query.setMealName,
-        sex: '男',
-        email: '',
-        picFile: '',
-        picFile2: '',
-        picFile3: ''
+      if(this.type==2){
+        this.formData.customerName = '李四'
       }
     },
     methods: {
       successFn(){
         if(this.type==1){
-          this.$router.push('/selectPhone')
+          this.$router.push('/selectPhone?name='+this.formData.customerName+'&type='+this.type)
         }else {
-          this.$router.push('/orderInfor')
+          this.$router.push('/orderInfor?name='+this.formData.customerName+'&type='+this.type)
         }
       },
       changePY() {
@@ -278,6 +196,13 @@
             this.formData[i] = files[0]
           }
         }
+      },
+      showPosition () {
+        this.showPositionValue = true
+      },
+      sendCode(){
+        this.promptMsg = "发送成功"
+        this.showPrompt = true;
       },
       submit() {
         this.isSuccess = true
@@ -415,7 +340,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less" type="text/less">
-
   .weui-cell {
     padding: 0;
   }
