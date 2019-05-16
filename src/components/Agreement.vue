@@ -2,10 +2,13 @@
   <div class="main">
     <div class="agreement">
       <div class="name">协议内容</div>
-      <div class="content" style="text-align: center">{{detail}}</div>
+      <div class="content" style="text-align: center;padding-bottom: 100px">{{detail}}</div>
   </div>
     <div class="aTitle">请在下框内进行签名</div>
-    <div class="sign"></div>
+    <div class="sign">
+      <img style="width: 100%;height: 100%" src="../assets/zs.png" alt="" v-if="$route.query.type==1">
+      <img style="width: 100%;height: 100%" src="../assets/ls.png" alt="" v-if="$route.query.type==2">
+    </div>
     <div class="button" @click="submit()">生成协议</div>
   </div>
 </template>

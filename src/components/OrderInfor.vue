@@ -82,7 +82,7 @@
       </ul>
       <div class="bottom">实付金额：￥9499</div>
     </div>
-    <div class="button" @click="submit()" v-if="type!=2">确认支付</div>
+    <div class="button" @click="submit()" v-if="type!=3">确认支付</div>
     <div class="showSubmit">
       <x-dialog v-model="showSubmit" class="dialog-demo">
         <img src="../assets/closeOrg.png" alt="" class="close">

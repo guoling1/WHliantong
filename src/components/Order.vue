@@ -41,7 +41,7 @@
         </div>
         <div class="bottom">
           <div class="state">订单已完成</div>
-          <div class="button" @click="toDetail(1)">查看详情</div>
+          <div class="button" @click="toDetail(3)">查看详情</div>
         </div>
       </li>
     </ul>
@@ -190,7 +190,7 @@ export default {
         })
     },
     toDetail(id){
-      this.$router.push({path:'/orderInfor',query:{type:2}})
+      this.$router.push({path:'/orderInfor',query:{type:3}})
     }
   },
   components: {
