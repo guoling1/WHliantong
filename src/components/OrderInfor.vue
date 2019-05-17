@@ -29,11 +29,11 @@
           </li>
           <li>
             <span class="attr">颜色：</span>
-            <span class="value">2018</span>
+            <span class="value">白色</span>
           </li>
           <li>
             <span class="attr">内存：</span>
-            <span class="value">待支付</span>
+            <span class="value">64G</span>
           </li>
           <li>
             <span class="attr">套餐：</span>
@@ -45,7 +45,7 @@
           </li>
         </ul>
       </div>
-      <div class="bottom">￥6499.00<span>x1</span></div>
+      <div class="bottom">￥6000.00<span>x1</span></div>
     </div>
     <div class="box">
       <div class="boxTitle">收货信息</div>
@@ -80,7 +80,7 @@
           <span class="value fr">待支付</span>
         </li>
       </ul>
-      <div class="bottom">实付金额：￥9499</div>
+      <div class="bottom">实付金额：￥{{price}}</div>
     </div>
     <div class="button" @click="submit()" v-if="type!=3">确认支付</div>
     <div class="showSubmit">
@@ -126,6 +126,7 @@ export default {
   },
   created(){
     this.type = this.$route.query.type
+    this.price = this.$route.query.price
     if(this.GLOBAL.isKDApp){
       aladdin.header.config({
         //导航头部背景颜色
@@ -193,7 +194,7 @@ export default {
       this.showSubmit = true;
     },
     pay(){
-      this.$router.push('/payFinish?name='+this.$route.query.name+'&type='+this.$route.query.type)
+      this.$router.push('/payFinish?name='+this.$route.query.name+'&type='+this.$route.query.type+'&price='+this.$route.query.price)
       // if(this.GLOBAL.isKDApp){
       //   window.aladdin.navigator.forward({url:'http://test.hdjincheng.cn/#/payMethod?orderNo='+this.orderMsg.orderNo+'&id='+this.$route.query.id});
       // }else{

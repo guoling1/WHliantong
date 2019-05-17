@@ -174,10 +174,10 @@
     },
     methods: {
       successFn(){
-        if(this.type==1){
-          this.$router.push('/selectPhone?name='+this.formData.customerName+'&type='+this.type)
+        if(this.$route.query.type==1){
+          this.$router.push('/selectPhone?name='+this.formData.customerName+'&type='+this.$route.query.typ+'&price='+this.$route.query.price)
         }else {
-          this.$router.push('/orderInfor?name='+this.formData.customerName+'&type='+this.type)
+          this.$router.push('/orderInfor?name='+this.formData.customerName+'&type='+this.$route.query.typ+'&price='+this.$route.query.price)
         }
       },
       changePY() {

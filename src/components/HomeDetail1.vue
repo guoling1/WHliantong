@@ -72,7 +72,7 @@
         },
         isMask: false,
         aspectRatio: 1,
-        swiperList: [{img: ''}],
+        swiperList: [{img: require('../assets/phone.png')}],
         showAddress: false,
         showBank: false,
         showTips: false,
@@ -160,7 +160,7 @@
         });
       }
       window.scrollTo(0, 0)
-      this.init();
+      // this.init();
     },
     methods: {
       init() {
@@ -199,7 +199,7 @@
         // }
       },
       infoEntry(type){
-        this.$router.push('/inforEntry?type='+type)
+        this.$router.push('/inforEntry?typ=1&type='+type+'&price='+this.price1)
       },
       click5(key, item) {
         let num;
@@ -326,7 +326,7 @@
           this.price2='4000'
         }else if(a=='129元冰淇淋套餐'){
           this.price1='3000'
-          this.price2='5000'
+          this.price2='3000'
         }else if(a=='199元冰淇淋套餐'){
           this.price1='5000'
           this.price2='1000'

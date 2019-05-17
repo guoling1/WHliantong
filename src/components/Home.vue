@@ -10,23 +10,23 @@
         <p class="homeTitle">热门推荐</p>
         <ul>
           <li v-for="(item,index) in list">
-            <img :src="item.swiperList[0].url" alt="" style="width: 140px;height: 140px">
+            <img :src="item.url" alt="" style="width: 140px;height: 140px">
             <div class="">{{item.name}}</div>
             <!--<div class="subject" style="font-size: 14px;margin-top: 5px">{{item.packageName}}</div>-->
             <div class="subject">套餐：{{item.consumePrice}}<span>X{{item.circle}}期</span></div>
             <div class="price">存款金额：<span>￥{{item.deposit}}</span></div>
-            <div class="button" @click="toDetail(item.id)">立即办理</div>
+            <div class="button" @click="toDetail(item)">立即办理</div>
           </li>
         </ul>
         <p class="homeTitle">所有产品</p>
         <ul>
           <li v-for="(item,index) in list">
-            <img :src="item.swiperList[0].url" alt="" style="width: 140px;height: 140px">
+            <img :src="item.url" alt="" style="width: 140px;height: 140px">
             <div class="">{{item.name}}</div>
             <!--<div class="subject" style="font-size: 14px;margin-top: 5px">{{item.packageName}}</div>-->
             <div class="subject">套餐：{{item.consumePrice}}<span>X{{item.circle}}期</span></div>
             <div class="price">担保金额：<span>￥{{item.deposit}}</span></div>
-            <div class="button" @click="toDetail(item.id)">立即办理</div>
+            <div class="button" @click="toDetail(item)">立即办理</div>
           </li>
         </ul>
         <div style="margin: 17px;" @click="loadMore()" v-if="more">点击加载更多</div>
@@ -43,7 +43,31 @@
     data() {
       return {
         aspectRatio:0.63,
-        list: [],
+        list: [{
+          url:require('../assets/phone.png'),
+          name:'iPhone XS Max 64G',
+          consumePrice:'549.00',
+          circle:'12',
+          deposit:'6000',
+        },{
+          url:require('../assets/phone.png'),
+          name:'iPhone Max 64G',
+          consumePrice:'549.00',
+          circle:'12',
+          deposit:'6000',
+        },{
+          url:require('../assets/phone.png'),
+          name:'iPhone XS Max 128G',
+          consumePrice:'549.00',
+          circle:'12',
+          deposit:'6000',
+        },{
+          url:require('../assets/phone.png'),
+          name:'iPhone XS Max 256G',
+          consumePrice:'549.00',
+          circle:'12',
+          deposit:'6000',
+        }],
         // swiperList: [{img: require('../assets/banner.png')}],
         swiperList: [{img: require('../assets/homeBanner.png')},{img: require('../assets/homeBanner.png')}],
         showDots: true,
@@ -56,60 +80,6 @@
       }
     },
     created() {
-      if(this.GLOBAL.isKDApp){
-        aladdin.header.config({
-          //导航头部背景颜色
-          backgroundColor: '#ffffff',
-          //是否显示导航头部底部线条
-          underlineVisible: false,
-          //是否显示左区域按钮
-          leftVisible: true,
-          //是否显示右区域按钮
-          rightVisible: true,
-          //导航头部中间区域，
-          middle: [{
-            //类型（text、image、search等）
-            type: 'text',
-            //标题 页面title，自定义
-            title: '中国联通',
-            //文字颜色
-            textColor: '#f37937',
-            //文字大小
-            fontSize: 18,
-            //背景颜色
-            backgroundColor: '#ffffff',
-            //回调事件
-            click: function () {
-              //do something
-            }
-          }],
-          //左区域
-          left: [{
-            //图标
-            //icon: '/navBar/images/navBar/scan@2x.png',
-            //图标颜色
-            //tintColor: '#999999',
-            //背景颜色
-            //backgroundColor: '#ffffff',
-            //是否显示小红点
-            //badge: false,
-            //回调事件
-            click: function () {
-              window.aladdin.navigator.back();
-            }
-          }],
-          //右区域
-          right: [{
-            //图标
-            //icon: '/navBar/images/navBar/customer@2x.png',
-            //回调事件
-            //click: function () {
-            //do something
-            //}
-          }]}, function (err, param) {
-          //设置导航栏回调
-        });
-      }
       var url = location.href
       function formatUrl(url){
         var reg=/(?:[?&]+)([^&]+)=([^&#]+)/g; //三个分组，并且不匹配第一个分组
@@ -121,7 +91,7 @@
         return data;
       }
       var data=formatUrl(url);
-      this.getData()
+      // this.getData()
       if(data.key){
         localStorage.setItem('key',data.key)
       }else{
@@ -166,14 +136,10 @@
       listenClose(val){
         this.isLogin = val
       },
-      toDetail(id) {
+      toDetail(item) {
         this.$store.commit("PHONE",'请选择')
         localStorage.removeItem('selectPhone');
-        if(this.GLOBAL.isKDApp){
-          window.aladdin.navigator.forward({url:'http://test.hdjincheng.cn/#/homeDetail?id='+id+'&reload='+new Date().getTime()+'&areaId=1655&proproductColor=&checkCode=0000&number='});
-        }else {
-          this.$router.push({path:"/homeDetail",query:{id:id,reload:new Date().getTime(),areaId:1655,productColor:'',checkCode:'0000',number:''}})
-        }
+          this.$router.push({path:"/homeDetail",query:{url:item.url,name:item.name,consumePrice:item.consumePrice,circle:item.circle,deposit:item.deposit}})
       },
       getData(){
         this.$axios.post("/open/api/product/list",{sellFlag:1,areaId: 1655,pageNo:this.pageNo,pageSize:this.pageSize})

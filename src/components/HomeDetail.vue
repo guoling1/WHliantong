@@ -10,7 +10,7 @@
       <div class="item">
         <p class="left">颜&nbsp;&nbsp;&nbsp;&nbsp;色 ：</p>
         <ul class="right">
-          <li :class="color=='白色'?'active':''" @click="selectColor('白色')">白的</li>
+          <li :class="color=='白色'?'active':''" @click="selectColor('白色')">白色</li>
           <li :class="color=='黑色'?'active':''" @click="selectColor('黑色')">黑色</li>
         </ul>
       </div>
@@ -226,7 +226,7 @@
         },
         isMask: false,
         aspectRatio: 1,
-        swiperList: [{img: ''}],
+        swiperList: [{img: require('../assets/phone.png')}],
         showAddress: false,
         showBank: false,
         showTips: false,
@@ -235,8 +235,8 @@
         addressList: [],
         address: {name: '请选择'},
         colorList: ["深空灰", "金色", "玫瑰金"],
-        color: '请选择',
-        bb:'',
+        color: '白色',
+        bb:'64G',
         aa:'',
         warnText: false,
         errMsg: '',
@@ -340,7 +340,7 @@
         if(this.$route.query.zhanyeStatus){
           this.zhanyeStatus = this.$route.query.zhanyeStatus
         }
-        this.getData();
+        // this.getData();
         if (localStorage.getItem('key')) {
           this.$axios.post('/open/api/rcdUser/get', {qrcodeKey: localStorage.getItem('key')})
             .then(res => {
@@ -352,10 +352,10 @@
         // } else {
         //   this.phone = '请选择'
         // }
-        if(this.$route.query.checkCode!="0000"){
-          this.errMsg = "不能办理"
-          this.warnText = true
-        }
+        // if(this.$route.query.checkCode!="0000"){
+        //   this.errMsg = "不能办理"
+        //   this.warnText = true
+        // }
       },
       infoEntry(type){
         this.$router.push('/inforEntry?type='+type)

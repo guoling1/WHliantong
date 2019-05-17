@@ -222,7 +222,7 @@
         },
         isMask: false,
         aspectRatio: 1,
-        swiperList: [{img: ''}],
+        swiperList: [{img: require('../assets/phone.png')}],
         showAddress: false,
         showBank: false,
         showTips: false,
@@ -231,8 +231,8 @@
         addressList: [],
         address: {name: '请选择'},
         colorList: ["深空灰", "金色", "玫瑰金"],
-        color: '请选择',
-        bb:'',
+        color: '12个月',
+        bb:'99元冰淇淋套餐',
         aa:'',
         warnText: false,
         errMsg: '',
@@ -311,7 +311,7 @@
         });
       }
       window.scrollTo(0, 0)
-      this.init();
+      // this.init();
     },
     methods: {
       init() {
@@ -345,7 +345,8 @@
         }
       },
       infoEntry(type){
-        this.$router.push('/inforEntry?type='+type)
+        // this.$router.push('/inforEntry?type='+type+'&name=1')
+        this.$router.push('/inforEntry?typ=2&type='+type+'&price=6000')
       },
       click5(key, item) {
         let num;

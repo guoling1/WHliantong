@@ -4,7 +4,7 @@
     <p class="status">订单支付成功！</p>
     <ul>
       <li>订单编号：24343434</li>
-      <li>实付金额：<span>6499元</span></li>
+      <li>实付金额：<span>{{price}}元</span></li>
       <li>支付方式：微信支付</li>
     </ul>
     <div class="bottom" @click="pay()">下一步</div>
@@ -18,66 +18,12 @@
       return {
         showSubmit: false,
         orderMsg: {},
-        productData: JSON.parse(localStorage.getItem("productMessage"))
+        productData: JSON.parse(localStorage.getItem("productMessage")),
+        price:''
       }
     },
     created() {
-      if (this.GLOBAL.isKDApp) {
-        aladdin.header.config({
-          //导航头部背景颜色
-          backgroundColor: '#ffffff',
-          //是否显示导航头部底部线条
-          underlineVisible: false,
-          //是否显示左区域按钮
-          leftVisible: true,
-          //是否显示右区域按钮
-          rightVisible: true,
-          //导航头部中间区域，
-          middle: [{
-            //类型（text、image、search等）
-            type: 'text',
-            //标题 页面title，自定义
-            title: '提交订单',
-            //文字颜色
-            textColor: '#f37937',
-            //文字大小
-            fontSize: 18,
-            //背景颜色
-            backgroundColor: '#ffffff',
-            //回调事件
-            click: function () {
-              //do something
-            }
-          }],
-          //左区域
-          left: [{
-            //图标
-            //icon: '/navBar/images/navBar/scan@2x.png',
-            //图标颜色
-            //tintColor: '#999999',
-            //背景颜色
-            //backgroundColor: '#ffffff',
-            //是否显示小红点
-            //badge: false,
-            //回调事件
-            click: function () {
-              window.aladdin.navigator.back();
-            }
-          }],
-          //右区域
-          right: [{
-            //图标
-            //icon: '/navBar/images/navBar/customer@2x.png',
-            //回调事件
-            //click: function () {
-            //do something
-            //}
-          }]
-        }, function (err, param) {
-          //设置导航栏回调
-        });
-      }
-      // this.getData()
+      this.price = this.$route.query.price
     },
     methods: {
       getData() {

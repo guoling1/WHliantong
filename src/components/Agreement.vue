@@ -6,8 +6,8 @@
   </div>
     <div class="aTitle">请在下框内进行签名</div>
     <div class="sign">
-      <img style="width: 100%;height: 100%" src="../assets/zs.png" alt="" v-if="$route.query.type==1">
-      <img style="width: 100%;height: 100%" src="../assets/ls.png" alt="" v-if="$route.query.type==2">
+      <img style="width: 100%;height: 100%" src="../assets/zs.png" alt="" v-if="$route.query.name=='张三'">
+      <img style="width: 100%;height: 100%" src="../assets/ls.png" alt="" v-if="$route.query.name=='李四'">
     </div>
     <div class="button" @click="submit()">生成协议</div>
   </div>

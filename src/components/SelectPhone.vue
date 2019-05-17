@@ -98,10 +98,11 @@ export default {
           for(let i=0;i<this.phoneList.length;i++){
             this.phoneList[i].number = parseFloat(this.phoneList[i].number).toString()
           }
+          this.selectNum = this.phoneList[0].number
         })
     },
     submit(){
-      this.$router.push('/orderInfor?name='+this.$route.query.name+'&type='+this.$route.query.type)
+      this.$router.push('/orderInfor?name='+this.$route.query.name+'&type='+this.$route.query.type+'&price='+this.$route.query.price)
       // localStorage.setItem("selectPhone",this.selectNum)
       // this.$store.commit("PHONE",this.selectNum)
       // if(this.GLOBAL.isKDApp){
