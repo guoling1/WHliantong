@@ -24,8 +24,8 @@
             <img :src="item.url" alt="" style="width: 140px;height: 140px">
             <div class="">{{item.name}}</div>
             <!--<div class="subject" style="font-size: 14px;margin-top: 5px">{{item.packageName}}</div>-->
-            <div class="subject">套餐：{{item.consumePrice}}<span>X{{item.circle}}期</span></div>
-            <div class="price">担保金额：<span>￥{{item.deposit}}</span></div>
+            <div class="subject">套餐：{{item.packagePrice}}<span>X{{item.term}}期</span></div>
+            <div class="price">存款金额：<span>￥{{item.deposit}}</span></div>
             <div class="button" @click="toDetail(item)">立即办理</div>
           </li>
         </ul>
@@ -91,44 +91,16 @@
         return data;
       }
       var data=formatUrl(url);
-      // this.getData()
-      if(data.key){
-        localStorage.setItem('key',data.key)
-      }else{
-        localStorage.removeItem('key')
-      }
-      if(data.bk==1){
-        sessionStorage.setItem('bk',1)
-        this.$store.commit('BK')
-      }
-      if(data.ext){
-        localStorage.setItem('ext',data.ext)
-        // this.$store.commit('BK')
-      }else {
-        localStorage.setItem('ext',0)
-        localStorage.setItem('key','384af3af0dd948cfbeda2290146fa835')
-      }
-      if(data.cid){
-        localStorage.setItem('bankMsg',JSON.stringify(data))
-      }else {
-        let dataPrams={
-          source:'sa0001187',
-          outerSource:'os0003740',
-          outerid:'ou0000692',
-          cid:'ci0000001',
-          rec_no:'ZHANGLEIBJ'
-        }
-        // localStorage.removeItem('bankMsg')
-        localStorage.setItem('bankMsg',JSON.stringify(dataPrams))
-      }
-      // this.getSwiper()
+      this.getSwiper();
+      this.getData()
     },
     methods: {
       getSwiper(){
-        this.$axios.post("/open/api/index/swiper/list")
+        this.$axios.get("/mobile/querySwipers")
           .then(res=>{
+            console.log(res)
             for(let i=0;i<res.data.length;i++){
-              res.data[i].img = res.data[i].url
+              res.data[i].img = res.data[i].picUrl
             }
             this.swiperList = res.data
           })
@@ -137,27 +109,27 @@
         this.isLogin = val
       },
       toDetail(item) {
-        this.$store.commit("PHONE",'请选择')
+        // this.$store.commit("PHONE",'请选择')
         localStorage.removeItem('selectPhone');
-          this.$router.push({path:"/homeDetail",query:{url:item.url,name:item.name,consumePrice:item.consumePrice,circle:item.circle,deposit:item.deposit}})
+          this.$router.push({path:"/homeDetail",query:{id:item.id}})
       },
       getData(){
-        this.$axios.post("/open/api/product/list",{sellFlag:1,areaId: 1655,pageNo:this.pageNo,pageSize:this.pageSize})
+        this.$axios.get("/mobile/queryProducts")
           .then(res=>{
-            for(let i=0;i<res.data.list.length;i++){
-              if(!res.data.list[i].swiperList||res.data.list[i].swiperList.length==0){
-                res.data.list[i].swiperList=[{url:''}]
-              }
-              if(!res.data.list[i].packageList){
-                res.data.list[i].packageList=[{price:'',circle:''}]
-              }
-            }
-            this.list = res.data.list;
-            if(this.pageNo==res.data.totalPage){
-              this.more = false
-            }else {
-              this.pageNo+=1;
-            }
+            // for(let i=0;i<res.data.length;i++){
+            //   if(!res.data.list[i].swiperList||res.data.list[i].swiperList.length==0){
+            //     res.data.list[i].swiperList=[{url:''}]
+            //   }
+            //   if(!res.data.list[i].packageList){
+            //     res.data.list[i].packageList=[{price:'',circle:''}]
+            //   }
+            // }
+            this.list = res.data;
+            // if(this.pageNo==res.data.totalPage){
+            //   this.more = false
+            // }else {
+            //   this.pageNo+=1;
+            // }
           })
       },
       loadMore(){

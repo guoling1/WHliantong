@@ -3,22 +3,20 @@
     <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!isMask" :loop="!isMask" dots-position="center" :show-desc-mask="isMask"></swiper>
     <div class="productMessage">
       <p class="name">{{productData.name}}</p>
-      <p class="price">现&nbsp;&nbsp;&nbsp;&nbsp;价 ：<span>￥6000.00</span></p>
-      <p class="price">库&nbsp;&nbsp;&nbsp;&nbsp;存 ：<span>有货</span></p>
+      <p class="price">现&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价 ：<span>￥{{productData.price}}</span></p>
+      <p class="price">库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存 ：<span>有货</span></p>
     </div>
     <div class="selectBox">
       <div class="item">
-        <p class="left">颜&nbsp;&nbsp;&nbsp;&nbsp;色 ：</p>
+        <p class="left">颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色 ：</p>
         <ul class="right">
-          <li :class="color=='白色'?'active':''" @click="selectColor('白色')">白色</li>
-          <li :class="color=='黑色'?'active':''" @click="selectColor('黑色')">黑色</li>
+          <li v-for="item in productData.colorList" :class="color==item.name?'active':''" @click="selectColor(item.name)">{{item.name}}</li>
         </ul>
       </div>
       <div class="item">
-        <p class="left">内&nbsp;&nbsp;&nbsp;&nbsp;存 ：</p>
+        <p class="left">内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;存 ：</p>
         <ul class="right">
-          <li :class="bb=='64G'?'active':''" @click="bbF('64G')">64G</li>
-          <li :class="bb=='128G'?'active':''" @click="bbF('128G')">128G</li>
+          <li v-for="item in productData.memoryList" :class="memory==item.name?'active':''" @click="selectMemory(item.name)">{{item.name}}</li>
         </ul>
       </div>
       <div class="item">
@@ -36,161 +34,6 @@
         <!--</ul>-->
       <!--</div>-->
     </div>
-    <!--<div class="address">
-      <span class="attr">归属地区</span>
-      <span class="val">郑州</span>
-      &lt;!&ndash;<span class="val" @click="openAddress()">{{address.name}}</span>&ndash;&gt;
-    </div>
-    <div class="address">
-      <span class="attr">手机号</span>
-      &lt;!&ndash;<div class="val">&ndash;&gt;
-        &lt;!&ndash;<span @click="oldUserFn('01')">新用户</span>&ndash;&gt;
-        &lt;!&ndash;<span @click="oldUserFn('02')">老用户</span>&ndash;&gt;
-      &lt;!&ndash;</div>&ndash;&gt;
-
-      <span class="val" @click="showhs=true">{{phone}}</span>
-      &lt;!&ndash;<span class="val" @click="toSelectPhone()">{{phone}}</span>&ndash;&gt;
-    </div>
-    <div class="select">
-      <span class="attr">颜色</span>
-      <span class="val" @click="openFormat()">{{color}}</span>
-      &lt;!&ndash;<div @click="openFormat()">
-        &lt;!&ndash;<span class="selectColor">{{productData.packageList[0].name}}</span>&ndash;&gt;
-        <span class="color" >{{color}}</span>
-        <img src="../assets/more.png" alt="">
-      </div>&ndash;&gt;
-    </div>
-    <div class="bank">
-      &lt;!&ndash;<div class="top">&ndash;&gt;
-      &lt;!&ndash;<span class="attr">存款银行</span>&ndash;&gt;
-      &lt;!&ndash;<span class="val" @click="selectBank()">请选择</span>&ndash;&gt;
-      &lt;!&ndash;</div>&ndash;&gt;
-      <div class="bottom">
-        <span>总销量：{{productData.sellAmount}}件</span>
-        <span>库存：{{stock}}件</span>
-      </div>
-    </div>
-    <div class="detail">
-      <div class="subject">
-        <i></i>
-        <span>图文详情</span>
-        <i></i>
-      </div>
-      <div class="detail" id="content" v-html="productData.content" style="font-size: 0"></div>
-      <div class="detail" id="content1" v-html="productData.configDetail" style="font-size: 0"></div>
-    </div>
-    <div class="end">
-      <input type="number" placeholder="推荐人手机号(选填)" v-model="rcdMobile">
-      <div class="button" @click="confirm()">确认</div>
-    </div>
-    <actionsheet v-model="showhs" :menus="menus" @on-click-menu="click5"></actionsheet>
-    &lt;!&ndash;选择地区&ndash;&gt;
-    <div>
-      <popup v-model="showAddress" position="right" style="overflow: auto">
-        <div style="width:150px;">
-          <p v-for="address in addressList" @click="selectAddress(address)" class="addressList">{{address.name}}</p>
-        </div>
-      </popup>
-    </div>
-    &lt;!&ndash;银行弹框&ndash;&gt;
-    <div class="showBank">
-      <x-dialog v-model="showBank" class="dialog-demo">
-        <div class="top">
-          <span>选择银行</span>
-          <span @click="showBank=false" class="close"></span>
-        </div>
-        <ul class="bankUl">
-          <li class="active">平安银行</li>
-          <li>平安银行</li>
-          <li>平安银行</li>
-          <li>平安银行</li>
-        </ul>
-      </x-dialog>
-    </div>
-    &lt;!&ndash;友情提示&ndash;&gt;
-    <div class="showBank showTips">
-      <x-dialog v-model="showTips" class="dialog-demo">
-        <div class="top">
-          <span>友情提示</span>
-          <span @click="showTips=false" class="close"></span>
-        </div>
-        <div class="content">
-          <p>1.联通黑名单用户不能办理</p>
-          <p>2.在联通已经拥有超过5个号码（含5个）不能办理</p>
-          <p>3.如不清楚账户状态可拨打10010咨询</p>
-        </div>
-        <div class="bottom">
-          <div @click="showTips = false">取消</div>
-          <div @click="confirmTips()">确认</div>
-        </div>
-      </x-dialog>
-    </div>
-    &lt;!&ndash;登录框&ndash;&gt;
-    &lt;!&ndash;<div  class="showBank showTips">
-      <x-dialog v-model="showLogin" class="dialog-demo">
-        <div class="top">
-          <span>登录</span>
-          <span @click="showLogin=false" class="close"></span>
-        </div>
-        <div class="content" style="padding-top: 4px">
-          <ul>
-            <li>
-              <input v-model="formData.phone" type="number" placeholder="手机号">
-            </li>
-            <li>
-              <input v-model="formData.password" type="password" placeholder="密码(首次登录密码为注册短信验证码)">
-            </li>
-          </ul>
-        </div>
-        <router-link to="/regist" style="font-size: 14px;float: right;margin-right: 15px;color: #666;">注册</router-link>
-          <div class="buy" @click="toBuy()">立即购买</div>
-      </x-dialog>
-    </div>&ndash;&gt;
-    &lt;!&ndash;注册框&ndash;&gt;
-    <div class="showBank  regist">
-      <x-dialog v-model="showLogin" class="dialog-demo">
-        <div class="top">
-          <span>登录</span>
-          <span @click="showLogin=false" class="close"></span>
-        </div>
-        <div class="content" style="padding-top: 4px">
-          <ul>
-            <li>
-              <input v-model="formData.phone" type="number" placeholder="输入手机号">
-            </li>
-            <li>
-              <input v-model="formData.validataCode" type="text" placeholder="输入验证码">
-              <img :src="imgMsg.img" @click="imgClick()" alt="">
-            </li>
-            <li>
-              <input v-model="formData.messageCode" type="text" placeholder="输入短信验证码">
-              <span @click="getCode()">{{count}}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="buy" @click="toBuy()">立即购买</div>
-      </x-dialog>
-    </div>
-    &lt;!&ndash;选择规格&ndash;&gt;
-    <div class="showFormat">
-      <popup :hide-on-blur="hideBlur" v-model="showFormat" style="overflow: auto">
-        <div class="top">
-          <img :src="swiperList[0].img" alt="" style="margin-top: 10px">
-          <div class="right">
-            <p class="price">￥{{productData.price}}</p>
-            <p>库存：{{stock}}件</p>
-          </div>
-        </div>
-        <ul>
-          <li>
-            <div class="subject">机身颜色</div>
-            <span :class="color==item.color?'active':''" v-for="item in productData.colorList"
-                  @click="selectColor(item)">{{item.color}}</span>
-          </li>
-        </ul>
-        <div class="button" @click="confirmFormat()">确认</div>
-      </popup>
-    </div>-->
 
     <toast v-model="warnText" type="warn" :text=errMsg></toast>
     <toast v-model="showPrompt" position="middle" type="text" :text="promptMsg"></toast>
@@ -234,9 +77,8 @@
         showFormat: false,
         addressList: [],
         address: {name: '请选择'},
-        colorList: ["深空灰", "金色", "玫瑰金"],
-        color: '白色',
-        bb:'64G',
+        color: '',
+        memory:'',
         aa:'',
         warnText: false,
         errMsg: '',
@@ -259,61 +101,6 @@
       }
     },
     created() {
-      if (this.GLOBAL.isKDApp) {
-        aladdin.header.config({
-          //导航头部背景颜色
-          backgroundColor: '#ffffff',
-          //是否显示导航头部底部线条
-          underlineVisible: false,
-          //是否显示左区域按钮
-          leftVisible: true,
-          //是否显示右区域按钮
-          rightVisible: true,
-          //导航头部中间区域，
-          middle: [{
-            //类型（text、image、search等）
-            type: 'text',
-            //标题 页面title，自定义
-            title: '详情',
-            //文字颜色
-            textColor: '#f37937',
-            //文字大小
-            fontSize: 18,
-            //背景颜色
-            backgroundColor: '#ffffff',
-            //回调事件
-            click: function () {
-              //do something
-            }
-          }],
-          //左区域
-          left: [{
-            //图标
-            //icon: '/navBar/images/navBar/scan@2x.png',
-            //图标颜色
-            //tintColor: '#999999',
-            //背景颜色
-            //backgroundColor: '#ffffff',
-            //是否显示小红点
-            //badge: false,
-            //回调事件
-            click: function () {
-              window.aladdin.navigator.back();
-            }
-          }],
-          //右区域
-          right: [{
-            //图标
-            //icon: '/navBar/images/navBar/customer@2x.png',
-            //回调事件
-            //click: function () {
-            //do something
-            //}
-          }]
-        }, function (err, param) {
-          //设置导航栏回调
-        });
-      }
       window.scrollTo(0, 0)
       this.init();
     },
@@ -324,38 +111,7 @@
         //   this.color = localStorage.getItem('color')
         //   localStorage.removeItem('color')
         // }
-        if(this.$route.query.productColor){
-          if(this.$route.query.productColor=='null'){
-            this.color = "请选择"
-          }else {
-            this.color = this.$route.query.productColor
-          }
-        }
-        if(this.$route.query.number){
-          this.phone = this.$route.query.number
-        }
-        if(this.$route.query.netMode){
-          this.netMode = this.$route.query.netMode
-        }
-        if(this.$route.query.zhanyeStatus){
-          this.zhanyeStatus = this.$route.query.zhanyeStatus
-        }
-        // this.getData();
-        if (localStorage.getItem('key')) {
-          this.$axios.post('/open/api/rcdUser/get', {qrcodeKey: localStorage.getItem('key')})
-            .then(res => {
-              this.rcdMobile = res.data.rcdMobile;
-            })
-        }
-        // if (localStorage.getItem('selectPhone')) {
-        //   this.phone = localStorage.getItem('selectPhone')
-        // } else {
-        //   this.phone = '请选择'
-        // }
-        // if(this.$route.query.checkCode!="0000"){
-        //   this.errMsg = "不能办理"
-        //   this.warnText = true
-        // }
+        this.getData();
       },
       infoEntry(type){
         this.$router.push('/inforEntry?type='+type)
@@ -430,7 +186,7 @@
       },
       //获取产品信息
       getData() {
-        this.$axios.post("/open/api/product/get", {id: this.$route.query.id})
+        this.$axios.get("/mobile/getProductInfo/"+this.$route.query.id)
           .then(res => {
             this.productData = res.data;
             //轮播图
@@ -440,6 +196,8 @@
             }
             this.swiperList = arr;
             this.stock = res.data.amount;
+            this.color = res.data.colorList[0].name;
+            this.memory = res.data.memoryList[0].name;
             /*if(this.productData.content){
               document.getElementById("content").innerHTML = this.productData.content
             }
@@ -478,14 +236,14 @@
         // this.color = color.color;
         // this.stock = color.amount
       },
-      bbF(a){
-        this.bb = a
+      selectMemory(memory){
+        this.memory = memory
       },
       aaF(a){
         if(a==1){
           this.$router.push('/homeDetail1?id=149');
         }else {
-          this.$router.push('/homeDetail2?id=149')
+          this.$router.push('/homeDetail2?id='+this.$route.query.id)
         }
       },
       selectBank() {
@@ -853,13 +611,14 @@
     .selectBox{
       padding: 10px;
       .item{
-        margin-top: 10px;
+        /*margin-top: 10px;*/
         .left{
           float: left;
           font-size: 17px;
           font-weight: bold;
         }
         .right{
+          margin-left: 90px;
           li{
             display: inline-block;
             padding: 2px 5px;
@@ -867,6 +626,7 @@
             border: 1px solid #797979;
             color: #3a3a3c;
             border-radius: 3px;
+            margin: 0 10px 10px 0;
           }
           li.active{
             color: #ff7653;

@@ -2,7 +2,10 @@
   <div class="main">
     <div class="myTop">
       <!--<img src="../assets/tx.png" alt="">-->
-      <div class="avatar">头像</div>
+      <router-link to="/login">
+        <div class="avatar">头像</div>
+        <p class="name">{{userName}}</p>
+      </router-link>
       <!--<div class="right">-->
         <!--<p class="welcome">欢迎您，</p>-->
         <!--<p class="phone">手机号：{{phone}}</p>-->
@@ -20,6 +23,10 @@
       <li @click="toOrder()">
         <span>我的地址</span>
         <span class="fr">xxxxxxxxx</span>
+      </li>
+      <li @click="signOut()" v-if="isLogin">
+        <img src="../assets/退出登录.png" alt="" style="width: 20px">
+        <span>退出登录</span>
       </li>
       <!--<li @click="toOrder()">
         <img src="../assets/orderIcon.png" alt="">
@@ -86,6 +93,7 @@
           validataCode:'',
           messageCode:''
         },
+        userName:'',
         phone:'',
         showLogin: false,
         count: '获取验证码',
@@ -102,10 +110,8 @@
     created(){
       if(localStorage.getItem("userMessage")){
         this.phone = JSON.parse(localStorage.getItem("userMessage")).mobile
+        this.userName = JSON.parse(localStorage.getItem("userMessage")).name
         this.isLogin =true
-      }
-      if(sessionStorage.getItem('bk')==1){
-        this.isHide = true
       }
     },
     mounted(){
@@ -188,11 +194,15 @@
         }
       },
       signOut(){
-        this.phone = ""
-        localStorage.clear();
-        this.isLogin = false
-        this.$store.commit('LOGOUT')
-
+        this.$axios.get("/logout")
+          .then(res=>{
+            this.phone = ""
+            localStorage.clear();
+            this.isLogin = false
+            this.$store.commit('LOGOUT')
+            this.showPrompt = true;
+            this.promptMsg = res.msg;
+          })
       },
       login(){
         // this.validateCode()
@@ -275,14 +285,14 @@
       background: url("../assets/myBg.png") no-repeat;
       background-size: 100% auto;
       /*margin: 19px 15px 30px;*/
-      /*height: 92px;*/
+      height: 160px;
       /*background: #f4f4f4;*/
       /*border-radius: 5px;*/
       text-align: center;
       /*box-shadow: 0 3px 12px #f4f4f4;*/
 
       .avatar {
-        margin: 40px 0 60px;
+        margin: 40px 0 0;
         /*margin-left: 28px;*/
         display: inline-block;
         width: 63px;
@@ -292,6 +302,10 @@
         border-radius: 50%;
         background: #fb705d;
         color: #fff;
+      }
+      .name{
+        margin-top: 10px;
+        color: #111;
       }
 
       .right {

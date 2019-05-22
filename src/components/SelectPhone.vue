@@ -86,7 +86,7 @@ export default {
   methods:{
 
     getData(){
-      this.$axios.post("/open/api/numberpool/list",{pageNo:this.pageNo})
+      this.$axios.post("/mobile/queryNumberResource",{pageNo:this.pageNo})
         .then(res=>{
           this.phoneList = res.data.list;
 

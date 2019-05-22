@@ -13,7 +13,7 @@ Vue.component('xDialog',XDialog);
 Vue.config.productionTip = false;
 
 import axios from 'axios'
-axios.defaults.baseURL = "http://zzpa.wojinxin.com/zhengzhou";
+axios.defaults.baseURL = "http://manage.shangjkj.com/api";
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 Vue.prototype.$axios= axios;
 
@@ -41,16 +41,18 @@ router.beforeEach((to, from, next) => {
 axios.interceptors.request.use(
   config => {
     if (localStorage.getItem('token')) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
-      config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+      // config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
       config.headers.token = localStorage.getItem('token');
-      config.headers.sessionid = localStorage.getItem('sessionid');
-      config.headers.tester = 1;
+      // config.headers.sessionid = localStorage.getItem('sessionid');
+      // config.headers.tester = 1;
     }
-    if((/\/open\/api\/order\/save/).test(config.url)){
+    if((/\/login|\/regist/).test(config.url)){
+      config.headers['Content-Type']='application/json'
       // config.data=qs.stringify(config.data)
       return config;
     }else {
-      config.data=qs.stringify(config.data)
+      config.headers['Content-Type']='application/json'
+      // config.data=qs.stringify(config.data)
       return config;
     }
   },
@@ -64,7 +66,7 @@ axios.interceptors.response.use(
     let {status,data} = response;
     if(status == 200) {
       // response.data = data.retObject||data;
-      response.data = data.retObject;
+      response.data = data.data;
       if(data.retCode=='1006'){
         router.replace({
           path: '/regist',
@@ -72,8 +74,8 @@ axios.interceptors.response.use(
         })
       }
     }
-    response.retMsg = data.retMsg;
-    response.retCode = data.retCode;
+    response.msg = data.msg;
+    response.code = data.code;
     return response;
   },
   error => {
