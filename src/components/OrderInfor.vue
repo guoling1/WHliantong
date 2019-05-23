@@ -106,7 +106,7 @@
             <span>微信支付</span>
           </li>
         </ul>
-        <div class="bottom" @click="pay()">去付款</div>
+        <div class="bottom" @click="toPay()">去付款</div>
       </x-dialog>
     </div>
   </div>
@@ -127,67 +127,34 @@ export default {
   created(){
     this.type = this.$route.query.type
     this.price = this.$route.query.price
-    if(this.GLOBAL.isKDApp){
-      aladdin.header.config({
-        //导航头部背景颜色
-        backgroundColor: '#ffffff',
-        //是否显示导航头部底部线条
-        underlineVisible: false,
-        //是否显示左区域按钮
-        leftVisible: true,
-        //是否显示右区域按钮
-        rightVisible: true,
-        //导航头部中间区域，
-        middle: [{
-          //类型（text、image、search等）
-          type: 'text',
-          //标题 页面title，自定义
-          title: '提交订单',
-          //文字颜色
-          textColor: '#f37937',
-          //文字大小
-          fontSize: 18,
-          //背景颜色
-          backgroundColor: '#ffffff',
-          //回调事件
-          click: function () {
-            //do something
-          }
-        }],
-        //左区域
-        left: [{
-          //图标
-          //icon: '/navBar/images/navBar/scan@2x.png',
-          //图标颜色
-          //tintColor: '#999999',
-          //背景颜色
-          //backgroundColor: '#ffffff',
-          //是否显示小红点
-          //badge: false,
-          //回调事件
-          click: function () {
-            window.aladdin.navigator.back();
-          }
-        }],
-        //右区域
-        right: [{
-          //图标
-          //icon: '/navBar/images/navBar/customer@2x.png',
-          //回调事件
-          //click: function () {
-          //do something
-          //}
-        }]}, function (err, param) {
-        //设置导航栏回调
-      });
-    }
     this.getData()
   },
   methods:{
+    toPay(){
+      this.$axios.post("/cashier/dopay",{
+        id: 0,
+        accountName: '王桂英',
+        phone: '17620435614',
+        amount: '100000',
+        accountType:'02',
+        idCard:'340828198510206127',
+        idCardType:'00',
+        termType:'',
+        cvv2:'',
+        term:6,
+        expiredDate:'0422',
+        accountNo:'6259983921622221',
+        remarks: ''
+      })
+        .then(res=>{
+          window.location.href=res.data
+        })
+    },
     getData(){
       this.$axios.post("/open/api/order/detail/get",{id:this.$route.query.id})
         .then(res=>{
-          this.orderMsg = res.data;
+          // this.orderMsg = res.data;
+          window.location.href=res.data
         })
     },
     submit(){

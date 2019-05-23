@@ -4,7 +4,7 @@
       <!--<img src="../assets/tx.png" alt="">-->
       <router-link to="/login">
         <div class="avatar">头像</div>
-        <p class="name">{{userName}}</p>
+        <p class="name">{{userData.name}}</p>
       </router-link>
       <!--<div class="right">-->
         <!--<p class="welcome">欢迎您，</p>-->
@@ -14,15 +14,15 @@
     <ul class="list">
       <li @click="toOrder()">
         <span>我的联系方式</span>
-        <span class="fr">xxxxxxxxx</span>
+        <span class="fr">{{userData.mobile}}</span>
       </li>
       <li @click="toOrder()">
         <span>我的邮箱</span>
-        <span class="fr">xxxxxxxxx</span>
+        <span class="fr">{{userData.email||'无'}}</span>
       </li>
       <li @click="toOrder()">
         <span>我的地址</span>
-        <span class="fr">xxxxxxxxx</span>
+        <span class="fr">{{userData.address||'无'}}</span>
       </li>
       <li @click="signOut()" v-if="isLogin">
         <img src="../assets/退出登录.png" alt="" style="width: 20px">
@@ -88,6 +88,7 @@
     name: 'My',
     data() {
       return {
+        userData:{},
         formData:{
           phone:'',
           validataCode:'',
@@ -109,15 +110,27 @@
     },
     created(){
       if(localStorage.getItem("userMessage")){
-        this.phone = JSON.parse(localStorage.getItem("userMessage")).mobile
-        this.userName = JSON.parse(localStorage.getItem("userMessage")).name
-        this.isLogin =true
+        // this.phone = JSON.parse(localStorage.getItem("userMessage")).mobile
+        // this.userName = JSON.parse(localStorage.getItem("userMessage")).name
+        // this.isLogin =true
+        this.getUser()
       }
+      // this.getUser()
     },
     mounted(){
       this.qrcode()
     },
     methods: {
+      getUser(){
+        this.$axios.get("/mobile/myInfo")
+          .then(res=>{
+            this.userData = res.data
+          })
+          .catch(err=>{
+            this.showPrompt = true;
+            this.promptMsg = err.msg;
+          })
+      },
       listenClose(val){
         this.showLogin = val
       },

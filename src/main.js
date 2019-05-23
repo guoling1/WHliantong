@@ -63,6 +63,7 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    console.log(response)
     let {status,data} = response;
     if(status == 200) {
       // response.data = data.retObject||data;
@@ -79,7 +80,21 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    return Promise.reject('系统异常')   // 返回接口返回的错误信息
+    let err = {};
+    if(/401/.test(error)){
+      localStorage.removeItem('token')
+      localStorage.removeItem('userMessage')
+      err={
+        code:401,
+        msg:'登录过期，请重新登录'
+      }
+    }else {
+      err={
+        code:500,
+        msg:'系统异常'
+      }
+    }
+    return Promise.reject(err)   // 返回接口返回的错误信息
   });
 
 /* eslint-disable no-new */
