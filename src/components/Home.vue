@@ -1,10 +1,5 @@
 <template>
   <div class="main">
-
-    <!--<div class="banner">-->
-      <!--<img src="../assets/banner.png" alt="" style="width: 100%;height: 100%">-->
-
-    <!--</div>-->
       <div>
         <swiper :list="swiperList" :aspect-ratio="aspectRatio" :auto="!descMask" :loop="!descMask" :show-dots="showDots" :show-desc-mask="descMask" dots-position="center" dots-class="dotsClass"></swiper>
         <p class="homeTitle">热门推荐</p>
@@ -42,33 +37,15 @@
     name: 'Home',
     data() {
       return {
-        aspectRatio:0.63,
+        // aspectRatio:0.63,
+        aspectRatio:1,
         list: [{
           url:require('../assets/phone.png'),
           name:'iPhone XS Max 64G',
           consumePrice:'549.00',
           circle:'12',
           deposit:'6000',
-        },{
-          url:require('../assets/phone.png'),
-          name:'iPhone Max 64G',
-          consumePrice:'549.00',
-          circle:'12',
-          deposit:'6000',
-        },{
-          url:require('../assets/phone.png'),
-          name:'iPhone XS Max 128G',
-          consumePrice:'549.00',
-          circle:'12',
-          deposit:'6000',
-        },{
-          url:require('../assets/phone.png'),
-          name:'iPhone XS Max 256G',
-          consumePrice:'549.00',
-          circle:'12',
-          deposit:'6000',
         }],
-        // swiperList: [{img: require('../assets/banner.png')}],
         swiperList: [{img: require('../assets/homeBanner.png')},{img: require('../assets/homeBanner.png')}],
         showDots: true,
         descMask: false,
@@ -76,11 +53,9 @@
         pageNo:1,
         pageSize:10,
         more:true,
-        isLogin:false
       }
     },
     created() {
-      var url = location.href
       function formatUrl(url){
         var reg=/(?:[?&]+)([^&]+)=([^&#]+)/g; //三个分组，并且不匹配第一个分组
         var data={};
@@ -90,7 +65,6 @@
         url.replace(reg,fn);
         return data;
       }
-      var data=formatUrl(url);
       this.getSwiper();
       this.getData()
     },
@@ -104,9 +78,6 @@
             }
             this.swiperList = res.data
           })
-      },
-      listenClose(val){
-        this.isLogin = val
       },
       toDetail(item) {
         // this.$store.commit("PHONE",'请选择')

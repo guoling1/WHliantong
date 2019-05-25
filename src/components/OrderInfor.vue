@@ -106,7 +106,7 @@
             <span>微信支付</span>
           </li>
         </ul>
-        <div class="bottom" @click="toPay()">去付款</div>
+        <div class="bottom" @click="pay()">去付款</div>
       </x-dialog>
     </div>
   </div>

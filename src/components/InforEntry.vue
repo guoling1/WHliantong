@@ -76,7 +76,7 @@
       <ul v-if="type!=2" class="phoneUl">
         <li class="cardPhoto">
           <img id="cardFaceImg" src="../assets/idcardface.png" alt="" @click="uploadClick('cardFace')">
-          <input accept="image/*" type="file" @change="getFile($event,'cardFace','cardFaceImg','picFile')" id="cardFace" style="display: none">
+          <input accept="image/*" capture="camera" type="file" @change="getFile($event,'cardFace','cardFaceImg','picFile')" id="cardFace" style="display: none">
           <p>身份证正面</p>
         </li>
         <li class="cardPhoto">
