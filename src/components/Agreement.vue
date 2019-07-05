@@ -1,16 +1,24 @@
 <template>
-  <div class="main">
+  <div class="agreementBox">
 
     <div class="agreement">
       <div class="name">协议内容</div>
       <div class="content" style="text-align: center;padding-bottom: 100px">{{detail}}</div>
-  </div>
+    </div>
     <div class="aTitle">请在下框内进行签名</div>
-    <div class="sign">
+    <!--<div class="sign">
       <img style="width: 100%;height: 100%" src="../assets/zs.png" alt="" v-if="$route.query.name=='张三'">
       <img style="width: 100%;height: 100%" src="../assets/ls.png" alt="" v-if="$route.query.name=='李四'">
+    </div>-->
+    <div class="sign">
+      <canvas id="canvas" :width="width" height="200"></canvas>
+      <div>
+        <button type="button" @click="clear">清空</button>
+        <button type="button" @click="save">保存</button>
+      </div>
+      <img class="preview-img" v-if="url!==''" :src="url" :width="imgWidth" :height="imgHeight" alt="">
     </div>
-    <div class="hello">
+    <!--<div class="hello">
       <div id="canvas">
       </div>
       <p @click="handelClearEl()">清除</p>
@@ -18,21 +26,48 @@
       <p @click="handelThickness()">粗细</p>
       <p @click="handelColour()">颜色</p>
       <img :src="imgsrc" alt="">
-    </div>
+    </div>-->
     <div class="button" @click="submit()">生成协议</div>
   </div>
 </template>
 
 <script>
-  let canvas = document.createElement("canvas");
-  let cxt = canvas.getContext("2d");
+  var preHandler = function ( e ) {e.preventDefault();};
   export default {
-    name: 'Agreement',
+    name: 'agreementBox',
+    props : {
+      width : {
+        type : String,
+        default : '300'
+      },
+      height : {
+        type : String,
+        default : '200'
+      },
+      strokeStyle:{
+        type : String,
+        default : '#000'
+      },
+      showUrl:{
+        type : Boolean,
+        default : true
+      },
+      imgWidth:{
+        type : String,
+        default : '200'
+      },
+      imgHeight:{
+        type : String,
+        default : '200'
+      }
+    },
     data() {
       return {
-        linewidth: 1, //线条粗细，选填
-        color: "black", //线条颜色，选填
-        background: "pink", //线条背景，选填
+        canvas : null,       //canvas
+        ctx : null,          //ctx canvas对象
+        stroke_info:null,    //当前绘图的坐标
+        url:'',              //base64 图像
+        // height: '200',
         imgsrc: "",
         showSubmit: false,
         orderMsg: {},
@@ -41,64 +76,66 @@
       }
     },
     mounted() {
-      console.log("mounted");
-      console.log(this.color);
-      this.getCanvas();
+      document.getElementById("canvas").width=document.getElementsByClassName("sign")[0].offsetWidth
+      this.$nextTick(_ => {
+        this.init()
+      })
     },
     methods: {
-      getCanvas() {
-        let el = document.getElementById("canvas");
-        el.appendChild(canvas);
-        canvas.width = el.clientWidth;
-        canvas.height = el.clientHeight;
-        cxt.fillStyle = this.background; //填充绘图的背景颜色
-        cxt.fillRect(0, 0, canvas.width, canvas.height); //绘制“已填色”的矩形
-        cxt.strokeStyle = this.color; //笔触的颜色
-        cxt.lineCap = "round"; //线条末端线帽的样式
-        let linewidth = this.linewidth;
-        //开始绘制
-        canvas.addEventListener(
-          "touchstart",
-          function(e) {
-            cxt.beginPath();
-            cxt.lineWidth = linewidth; //当前线条的宽度，以像素计
-            cxt.moveTo(e.changedTouches[0].pageX, e.changedTouches[0].pageY-50);
-          }.bind(this),
-          false
-        );
-        //绘制中
-        canvas.addEventListener(
-          "touchmove",
-          function(e) {
-            cxt.lineTo(e.changedTouches[0].pageX, e.changedTouches[0].pageY-50);
-            cxt.stroke();
-          }.bind(this),
-          false
-        );
-        //结束绘制
-        canvas.addEventListener(
-          "touchend",
-          function() {
-            cxt.closePath();
-          }.bind(this),
-          false
-        );
+      init () {
+        let that = this;
+        this.canvas = document.getElementById('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.stroke_info = this.canvas.getBoundingClientRect();
+        this.canvas.addEventListener('touchstart',function ( event ) {
+          document.getElementsByClassName('agreementBox')[0].style.overflow='hidden'
+          document.addEventListener('touchStart',preHandler,false);
+          that.darwStart(event);
+        });
+        this.canvas.addEventListener('touchend', function(event) {
+          document.getElementsByClassName('agreementBox')[0].style.overflow=''
+          document.addEventListener('touchend', preHandler, false);
+          that.drawEnd()
+        });
+
+        this.clear();
       },
-      handelColour() {
-        this.color = "red";
-        this.getCanvas();
+      darwStart(e){
+        let that = this;
+        let t = e.changedTouches[0];
+        // console.log(t.clientX, t.clientY);
+        this.ctx.strokeStyle = this.strokeStyle;
+        this.ctx.beginPath();  //清空所有绘画路径
+        this.ctx.moveTo(t.clientX - this.stroke_info.left, t.clientY - this.stroke_info.top+document.getElementsByClassName('agreementBox')[0].scrollTop);
+        this.canvas.addEventListener('touchmove',function (event) {
+          that.darwMove(event);
+        })
       },
-      handelThickness() {
-        this.linewidth = 5;
-        this.getCanvas();
+      darwMove(e){
+        let t = e.changedTouches[0];
+        this.ctx.lineTo(t.clientX - this.stroke_info.left, t.clientY - this.stroke_info.top+document.getElementsByClassName('agreementBox')[0].scrollTop);
+        this.ctx.stroke();
       },
-      handelClearEl() {
-        cxt.clearRect(0, 0, canvas.width, canvas.height);
+      drawEnd(){
+        document.removeEventListener('touchstart', preHandler, false);
+        document.removeEventListener('touchmove', preHandler, false);
+        document.removeEventListener('touchend', preHandler, false);
       },
-      handelSaveEl() {
-        let imgBase64 = canvas.toDataURL();
-        console.log(imgBase64);
-        this.imgsrc = imgBase64;
+      clear () {
+        this.ctx.clearRect(0,0,document.getElementsByClassName("sign")[0].offsetWidth, this.height);
+        this.url = '';
+        this.$emit('draw_clear');
+      },
+      save () {
+        let data = this.canvas.toDataURL();
+        //是否显示预览截图
+        if(this.showUrl){
+          this.url = data;
+        }
+        let query = {url : data};
+        this.$emit('draw_save', query);
+        console.log(data)
+        // console.log(this.canvas);
       }
     }
     /*created() {
@@ -132,12 +169,15 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less" type="text/less">
-  .main {
-    /*padding: 0 25px;*/
+  .agreementBox {
+    margin-top: 0 !important;
+    position: fixed;
+    padding: 50px 25px 0;
     width: 100%;
-    /*min-height: 100%;*/
+    height: 100%;
     background: #f4f4f4;
     text-align: left;
+    overflow-y: auto;
     .agreement{
       padding: 45px 0;
       margin: 25px 0 45px;
@@ -157,12 +197,19 @@
       text-align: center;
       font-size: 16px;
     }
-    .sign{
-      margin: 25px 0 18px;
+    .sign {
+      width: 100%;
       height: 200px;
-      background: #acc4d5;
+      /*background: #acc4d5;*/
       box-shadow: 0 3px 20px #c2e0e5;
       border-radius: 5px;
+
+      canvas {
+        /*width: 100%;*/
+        /*height: 100%;*/
+        margin: 0 auto;
+        background: #acc4d5;
+      }
     }
     .button{
       margin: 0 auto 100px;
